@@ -1,4 +1,4 @@
-package org.example.moviecollection.gui;
+package org.example.moviecollection.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
