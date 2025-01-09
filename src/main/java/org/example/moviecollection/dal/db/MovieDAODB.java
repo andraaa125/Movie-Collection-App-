@@ -61,7 +61,7 @@ public class MovieDAODB {
 
     //This method adds movies to the database (avoiding duplicates... hopefully)
     public void addMovies(List<Movie> movieList) throws SQLException {
-        String sql = "INSERT INTO Movies (name, imdbRating, personalRating, filePath, lastViewed) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Movie (name, imdb_Rating, personal_rating, file_path, last_viewed) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dbConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
@@ -95,7 +95,7 @@ public class MovieDAODB {
     }
 
     public boolean updateMovie(Movie updatedMovie, double originalRating) throws SQLException {
-        String sql = "UPDATE Movies SET name = ?, PersonalRating = ?, FilePath = ?, LastViewed = ? WHERE Name = ? AND IMDBRating = ? AND PersonalRating = ?";
+        String sql = "UPDATE Movie SET name = ?, personal_rating = ?, file_path = ?, last_viewed = ? WHERE name = ? AND imdb_rating = ? AND personal_rating = ?";
         try (Connection connection = dbConnection.getConnection();
         PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, updatedMovie.getName());
@@ -115,7 +115,7 @@ public class MovieDAODB {
     }
 
     public boolean deleteMovie(String name) throws SQLException {
-        String sql = "DELETE FROM Movies WHERE Name = ?";
+        String sql = "DELETE FROM Movie WHERE name = ?";
         try (Connection connection = dbConnection.getConnection();
         PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, name);
