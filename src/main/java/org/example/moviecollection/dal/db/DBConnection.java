@@ -17,9 +17,9 @@ public class DBConnection {
     private void reconnect() throws SQLException {
         try {
             SQLServerDataSource ds = new SQLServerDataSource();
-            ds.setDatabaseName("Movie Collection App");
-            ds.setUser("username");
-            ds.setPassword("password");
+            ds.setDatabaseName("MovieCollectionApp_ABHJ");
+            ds.setUser("CSe2024b_e_0");
+            ds.setPassword("CSe2024bE0!24");
             ds.setServerName("EASV-DB4");
             ds.setPortNumber(1433);
             ds.setTrustServerCertificate(true);

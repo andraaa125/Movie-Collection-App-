@@ -29,12 +29,12 @@ public class MovieDAODB {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()){
-                int id = resultSet.getInt("ID");
-                String name = resultSet.getString("Name");
-                double imdbRating = resultSet.getDouble("IMDBRating");
-                double personalRating = resultSet.getDouble("PersonalRating");
-                String filePath = resultSet.getString("FilePath");
-                Date lastViewDate = resultSet.getDate("LastViewed");
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double imdbRating = resultSet.getDouble("imdb_rating");
+                double personalRating = resultSet.getDouble("personal_rating");
+                String filePath = resultSet.getString("file_path");
+                Date lastViewDate = resultSet.getDate("last_viewed");
 
                 Movie movie = new Movie(id, name, imdbRating, personalRating, filePath, lastViewDate);
                 allMovies.add(movie);
