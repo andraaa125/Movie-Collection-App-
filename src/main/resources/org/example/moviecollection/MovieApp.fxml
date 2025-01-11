@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="975.0" styleClass="mainWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="975.0" styleClass="mainWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.MovieCollectionApplicationController">
    <children>
       <HBox layoutY="-1.0" opacity="0.83" prefHeight="67.0" prefWidth="975.0" styleClass="header" stylesheets="@views/Style.css" />
       <ListView layoutX="25.0" layoutY="141.0" opacity="0.9" prefHeight="410.0" prefWidth="181.0" />
@@ -66,7 +67,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="95.0" layoutY="97.0" mnemonicParsing="false" onAction="#onAddCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnSearch">
+      <Button fx:id="btnAddCategory" layoutX="95.0" layoutY="97.0" mnemonicParsing="false" onAction="#onAddCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnSearch">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>

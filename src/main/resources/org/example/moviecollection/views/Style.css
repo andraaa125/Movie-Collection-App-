@@ -14,3 +14,14 @@
 {
     -fx-background-color: #f0e1cc;
 }
+
+.btnSearch:hover{
+    -fx-background-color: rgba(98, 0, 234, 0.1);
+}
+
+.categoryWindow
+{
+    -fx-background-image: url("/org/example/moviecollection/views/pictures/bg.jpg");
+    -fx-background-size: cover; /* Adjusts image size to cover entire area */
+    -fx-background-repeat: no-repeat; /* Avoid repeating the image */
+}
