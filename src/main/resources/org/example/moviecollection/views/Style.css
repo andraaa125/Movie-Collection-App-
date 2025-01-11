@@ -15,13 +15,40 @@
     -fx-background-color: #f0e1cc;
 }
 
-.btnSearch:hover{
+.btnSearch:hover
+{
     -fx-background-color: rgba(98, 0, 234, 0.1);
 }
+
+.btnEdit
+{
+    -fx-background-color: #f0e1cc;
+}
+
+.btnEdit:hover
+{
+    -fx-background-color: #e0d0b5;
+}
+
+.btnChoose
+{
+    -fx-background-color: #e8b776;
+}
+
+.btnChoose:hover{
+     -fx-background-color: #f0c28d;
+ }
 
 .categoryWindow
 {
     -fx-background-image: url("/org/example/moviecollection/views/pictures/bg.jpg");
+    -fx-background-size: cover; /* Adjusts image size to cover entire area */
+    -fx-background-repeat: no-repeat; /* Avoid repeating the image */
+}
+
+.movieWindow
+{
+    -fx-background-image: url("/org/example/moviecollection/views/pictures/bg1.jpg");
     -fx-background-size: cover; /* Adjusts image size to cover entire area */
     -fx-background-repeat: no-repeat; /* Avoid repeating the image */
 }

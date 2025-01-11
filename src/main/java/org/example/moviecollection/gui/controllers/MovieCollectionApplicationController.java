@@ -65,12 +65,28 @@ public class MovieCollectionApplicationController implements Initializable {
     public void onDeleteCategoryClick(ActionEvent actionEvent) {
     }
 
-    public void onAddMovieClick(ActionEvent actionEvent) {
+    public void onAddMovieClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("MovieEditor.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        AddEditMovieController movieController = fxmlLoader.getController();
+        movieController.setParentController(this);
+        Stage stage = new Stage();
+        stage.setTitle("Add/Edit Movie");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onEditMovieClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("MovieEditor.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        AddEditMovieController movieController = fxmlLoader.getController();
+        movieController.setParentController(this);
+        Stage stage = new Stage();
+        stage.setTitle("Add/Edit Movie");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onDeleteMovieClick(ActionEvent actionEvent) {
-    }
-
-    public void onEditMovieClick(ActionEvent actionEvent) {
     }
 }
