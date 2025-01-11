@@ -1,0 +1,16 @@
+.mainWindow
+{
+    -fx-background-image: url("/org/example/moviecollection/views/pictures/bg2.jpg");
+    -fx-background-size: cover; /* Adjusts image size to cover entire area */
+    -fx-background-repeat: no-repeat; /* Avoid repeating the image */
+}
+
+.header
+{
+    -fx-background-color: #f2be6d;
+}
+
+.btnSearch
+{
+    -fx-background-color: #f0e1cc;
+}
