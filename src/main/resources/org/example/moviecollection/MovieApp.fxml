@@ -15,8 +15,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.89" prefHeight="652.0" prefWidth="975.0" styleClass="mainWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.MovieCollectionApplicationController">
    <children>
       <HBox layoutY="-1.0" prefHeight="67.0" prefWidth="975.0" styleClass="header" stylesheets="@views/Style.css" />
-      <ListView fx:id="listViewCategories" layoutX="25.0" layoutY="147.0" opacity="0.9" prefHeight="410.0" prefWidth="238.0" />
-      <ListView layoutX="693.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="258.0" />
+      <ListView fx:id="listViewCategories" layoutX="25.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="238.0" />
+      <ListView layoutX="765.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="186.0" />
       <TextField layoutX="684.0" layoutY="17.0" opacity="0.9" prefHeight="35.0" prefWidth="220.0" />
       <Button layoutX="911.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="35.0" prefWidth="35.0" styleClass="btnSearch">
          <graphic>
@@ -40,12 +40,13 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <TableView layoutX="265.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="426.0">
+      <TableView layoutX="288.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="461.0">
         <columns>
-          <TableColumn prefWidth="144.8000030517578" text="Title" />
-          <TableColumn prefWidth="97.5999755859375" text="Personal Rating" />
-            <TableColumn prefWidth="100.0" text="IMDb Rating" />
-            <TableColumn minWidth="8.0" prefWidth="98.39999999999998" text="Last View" />
+          <TableColumn prefWidth="38.0" text="ID" />
+          <TableColumn prefWidth="177.0" text="Title" />
+            <TableColumn prefWidth="67.0" text="My Rating" />
+            <TableColumn minWidth="8.0" prefWidth="82.0" text="IMDb Rating" />
+            <TableColumn minWidth="8.0" prefWidth="103.0" text="Last View" />
         </columns>
       </TableView>
       <Button layoutX="288.0" layoutY="94.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="43.0" prefWidth="36.0" styleClass="btnEdit">
