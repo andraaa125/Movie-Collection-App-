@@ -67,15 +67,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnAddCategory" layoutX="95.0" layoutY="103.0" mnemonicParsing="false" onAction="#onAddCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit" stylesheets="@views/Style.css">
-         <graphic>
-            <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@views/pictures/icons8-add-50.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
       <Button layoutX="171.0" layoutY="103.0" mnemonicParsing="false" onAction="#onDeleteCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
