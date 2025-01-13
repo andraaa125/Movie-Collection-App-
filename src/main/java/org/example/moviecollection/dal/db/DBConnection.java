@@ -25,10 +25,10 @@ public class DBConnection {
             ds.setTrustServerCertificate(true);
 
             this.connection = ds.getConnection();
-            System.out.println("Connection established!");
+            System.out.println("Connection to the database has been established!");
 
         } catch (SQLException e) {
-            System.out.println("Database connection failed!");
+            System.out.println("Connection to the database has failed!");
             e.printStackTrace();
             throw e;
         }
@@ -36,7 +36,7 @@ public class DBConnection {
 
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            System.out.println("Reconnecting to the database");
+            System.out.println("Reconnecting to the database...");
             reconnect();
         }
         return connection;
