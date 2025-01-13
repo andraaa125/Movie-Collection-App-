@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -15,10 +16,7 @@ import org.example.moviecollection.dal.db.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 
@@ -73,6 +71,46 @@ public class MovieCollectionApplicationController implements Initializable {
     }
 
     public void onDeleteCategoryClick(ActionEvent actionEvent) {
+        
+            // Get the selected category from the ListView
+            String selectedCategory = listViewCategories.getSelectionModel().getSelectedItem();
+
+            if (selectedCategory != null) {
+                try {
+                    //  Retrieve the database connection
+                    Connection con = dbc.getConnection(); // Fetch actual Connection object from dbc
+                    
+                    //  Prepare the SQL query
+                    String deleteSQL = "DELETE FROM Category WHERE name = ?";
+                    PreparedStatement pstmt = con.prepareStatement(deleteSQL);
+                    pstmt.setString(1, selectedCategory);
+
+                    //  Execute the query
+                    int affectedRows = pstmt.executeUpdate();
+                    pstmt.close();
+
+                    //  Check if deletion was successful
+                    if (affectedRows > 0) {
+
+                        listViewCategories.getItems().remove(selectedCategory);
+                        showAlert("Success", "Category '" + selectedCategory + "' has been deleted.");
+                    } else {
+                        showAlert("Error", "Could not delete category.");
+                    }
+                } catch (SQLException e) {
+                    showAlert("Database Error", "Error deleting category: " + e.getMessage());
+                }
+            } else {
+                showAlert("Warning", "Please select a category to delete.");
+            }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public void onAddMovieClick(ActionEvent actionEvent) throws IOException {
@@ -133,10 +171,7 @@ public class MovieCollectionApplicationController implements Initializable {
         }
     }
 
-
-
-
-
-
-
+    public void addCategoryToListView(String categoryName) {
+        listViewCategories.getItems().add(categoryName);
+    }
 }

@@ -32,7 +32,7 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="txtName" alignment="CENTER" prefHeight="31.0" prefWidth="290.0">
+                  <TextField fx:id="txtAddEditCategory" alignment="CENTER" prefHeight="31.0" prefWidth="290.0">
                      <font>
                         <Font size="15.0" />
                      </font>
