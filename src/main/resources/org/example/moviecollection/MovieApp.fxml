@@ -15,8 +15,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.89" prefHeight="652.0" prefWidth="975.0" styleClass="mainWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.MovieCollectionApplicationController">
    <children>
       <HBox layoutY="-1.0" prefHeight="67.0" prefWidth="975.0" styleClass="header" stylesheets="@views/Style.css" />
-      <ListView fx:id="listViewCategories" layoutX="25.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="238.0" />
-      <ListView layoutX="765.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="186.0" />
+      <ListView fx:id="listViewCategories" layoutX="25.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="220.0" />
+      <ListView layoutX="761.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="190.0" />
       <TextField layoutX="684.0" layoutY="17.0" opacity="0.9" prefHeight="35.0" prefWidth="220.0" />
       <Button layoutX="911.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="35.0" prefWidth="35.0" styleClass="btnSearch">
          <graphic>
@@ -27,29 +27,29 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="25.0" layoutY="107.0" text="Category">
+      <Label layoutX="25.0" layoutY="117.0" text="Category">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="227.0" layoutY="107.0" text="Movie">
+      <Label layoutX="276.0" layoutY="117.0" text="Movie">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <Label layoutX="693.0" layoutY="107.0" text="Movie Details">
+      <Label layoutX="761.0" layoutY="117.0" text="Movie Details">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <TableView layoutX="288.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="461.0">
+      <TableView layoutX="256.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="493.0">
         <columns>
           <TableColumn prefWidth="38.0" text="ID" />
-          <TableColumn prefWidth="177.0" text="Title" />
-            <TableColumn prefWidth="67.0" text="My Rating" />
+          <TableColumn prefWidth="187.0" text="Title" />
+            <TableColumn prefWidth="76.0" text="My Rating" />
             <TableColumn minWidth="8.0" prefWidth="82.0" text="IMDb Rating" />
-            <TableColumn minWidth="8.0" prefWidth="103.0" text="Last View" />
+            <TableColumn minWidth="8.0" prefWidth="109.0" text="Last View" />
         </columns>
       </TableView>
-      <Button layoutX="288.0" layoutY="94.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="43.0" prefWidth="36.0" styleClass="btnEdit">
+      <Button layoutX="332.0" layoutY="95.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="43.0" prefWidth="36.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -85,7 +85,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="533.0" layoutY="103.0" mnemonicParsing="false" onAction="#onAddMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="595.0" layoutY="103.0" mnemonicParsing="false" onAction="#onAddMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -94,7 +94,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="633.0" layoutY="103.0" mnemonicParsing="false" onAction="#onDeleteMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="684.0" layoutY="103.0" mnemonicParsing="false" onAction="#onDeleteMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -103,7 +103,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="583.0" layoutY="103.0" mnemonicParsing="false" onAction="#onEditMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="640.0" layoutY="103.0" mnemonicParsing="false" onAction="#onEditMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
