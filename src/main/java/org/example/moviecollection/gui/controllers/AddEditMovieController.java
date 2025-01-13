@@ -1,7 +1,6 @@
 package org.example.moviecollection.gui.controllers;
 
 import javafx.event.ActionEvent;
-import org.controlsfx.control.Rating;
 
 public class AddEditMovieController {
     private MovieCollectionApplicationController movieCollectionApplicationController;
