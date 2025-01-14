@@ -12,13 +12,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.89" prefHeight="652.0" prefWidth="975.0" styleClass="mainWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.MovieCollectionApplicationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.89" prefHeight="652.0" prefWidth="926.0" styleClass="mainWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.MovieCollectionApplicationController">
    <children>
-      <HBox layoutY="-1.0" prefHeight="67.0" prefWidth="975.0" styleClass="header" stylesheets="@views/Style.css" />
-      <ListView fx:id="listViewCategories" layoutX="25.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="220.0" />
-      <ListView layoutX="761.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="190.0" />
-      <TextField layoutX="684.0" layoutY="17.0" opacity="0.9" prefHeight="35.0" prefWidth="220.0" />
-      <Button layoutX="911.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="35.0" prefWidth="35.0" styleClass="btnSearch">
+      <HBox layoutY="-1.0" prefHeight="67.0" prefWidth="926.0" styleClass="header" stylesheets="@views/Style.css" />
+      <ListView fx:id="listViewCategories" layoutX="33.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="220.0" />
+      <TextField layoutX="624.0" layoutY="17.0" opacity="0.9" prefHeight="35.0" prefWidth="220.0" />
+      <Button layoutX="853.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="35.0" prefWidth="35.0" styleClass="btnSearch">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -27,20 +26,16 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="25.0" layoutY="117.0" text="Category">
+      <Label layoutX="35.0" layoutY="117.0" text="Category">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="276.0" layoutY="117.0" text="Movie">
+      <Label layoutX="283.0" layoutY="117.0" text="Movie">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <Label layoutX="761.0" layoutY="117.0" text="Movie Details">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Label>
-      <TableView layoutX="256.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="493.0">
+      <TableView layoutX="283.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="609.0">
         <columns>
           <TableColumn prefWidth="38.0" text="ID" />
           <TableColumn prefWidth="187.0" text="Title" />
@@ -49,16 +44,8 @@
             <TableColumn minWidth="8.0" prefWidth="109.0" text="Last View" />
         </columns>
       </TableView>
-      <Button layoutX="332.0" layoutY="95.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="43.0" prefWidth="36.0" styleClass="btnEdit">
-         <graphic>
-            <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@views/pictures/icons8-play-pause-24.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutX="133.0" layoutY="103.0" mnemonicParsing="false" onAction="#onEditCategoryClick" prefHeight="28.0" prefWidth="15.0" styleClass="btnEdit">
+      <Button layoutX="857.0" layoutY="573.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="43.0" prefWidth="36.0" styleClass="btnEdit" />
+      <Button layoutX="171.0" layoutY="113.0" mnemonicParsing="false" onAction="#onEditCategoryClick" prefHeight="28.0" prefWidth="15.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -67,7 +54,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="171.0" layoutY="103.0" mnemonicParsing="false" onAction="#onDeleteCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="217.0" layoutY="113.0" mnemonicParsing="false" onAction="#onDeleteCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -76,7 +63,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="595.0" layoutY="103.0" mnemonicParsing="false" onAction="#onAddMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="755.0" layoutY="113.0" mnemonicParsing="false" onAction="#onAddMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -85,7 +72,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="684.0" layoutY="103.0" mnemonicParsing="false" onAction="#onDeleteMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="854.0" layoutY="113.0" mnemonicParsing="false" onAction="#onDeleteMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -94,11 +81,25 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="640.0" layoutY="103.0" mnemonicParsing="false" onAction="#onEditMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="804.0" layoutY="113.0" mnemonicParsing="false" onAction="#onEditMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@views/pictures/icons8-edit-64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="35.0" fitWidth="37.0" layoutX="857.0" layoutY="577.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@views/pictures/icons8-play-pause-24.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="125.0" layoutY="113.0" mnemonicParsing="false" onAction="#onAddMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@views/pictures/icons8-add-50.png" />
                </image>
             </ImageView>
          </graphic>
