@@ -15,6 +15,20 @@ public class CategoryManager {
     }
 
     public void deleteCategory(String name) {
-        categoryDAO.deleteCategory(name);
+        try {
+            categoryDAO.deleteCategory(name);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    public void updateCategory(Category category) {
+        try {
+            categoryDAO.updateCategory(category);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

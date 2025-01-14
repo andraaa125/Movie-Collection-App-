@@ -8,9 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.example.moviecollection.MovieCollectionApplication;
+import org.example.moviecollection.be.Category;
 import org.example.moviecollection.gui.model.MovieModel;
 
 import java.io.IOException;
@@ -71,15 +73,6 @@ public class MovieCollectionApplicationController implements Initializable {
         }
     }*/
 
-
-    public void onSearchBtnClick(ActionEvent actionEvent) {
-
-    }
-
-    public void onPlayBtnClick(ActionEvent actionEvent) {
-
-    }
-
     public void onAddCategoryClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("CategoryEditor.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -103,6 +96,29 @@ public class MovieCollectionApplicationController implements Initializable {
     }
 
     public void onDeleteCategoryClick(ActionEvent actionEvent) {
+        Category selectedCategory = (Category) listViewCategories.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null) {
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirm Delete Category");
+            confirmationAlert.setHeaderText("Are you sure you want to delete this category?");
+            confirmationAlert.setContentText("Category: " + selectedCategory.getName());
+
+            var result = confirmationAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                try {
+                    movieModel.deleteCategory(selectedCategory.getName());
+                    listViewCategories.getItems().remove(selectedCategory);
+                    listViewCategories.refresh();
+                    showAlert("Success", "The category you choose was successfully deleted.");
+                } catch (Exception e) {
+                    showAlert("Error", "An error occurred while deleting the category: " + e.getMessage());
+                }
+            }
+        } else {
+            // Show a warning if no song is selected
+            showAlert("No Category Was Selected", "Please select a category to delete.");
+
+        }
         /*
             // Get the selected category from the ListView
             String selectedCategory = listViewCategories.getSelectionModel().getSelectedItem();
@@ -111,7 +127,7 @@ public class MovieCollectionApplicationController implements Initializable {
                 try {
                     //  Retrieve the database connection
                     Connection con = dbc.getConnection(); // Fetch actual Connection object from dbc
-                    
+
                     //  Prepare the SQL query
                     String deleteSQL = "DELETE FROM Category WHERE name = ?";
                     PreparedStatement pstmt = con.prepareStatement(deleteSQL);
@@ -136,6 +152,16 @@ public class MovieCollectionApplicationController implements Initializable {
                 showAlert("Warning", "Please select a category to delete.");
             }*/
     }
+
+    public void onSearchBtnClick(ActionEvent actionEvent) {
+
+    }
+
+    public void onPlayBtnClick(ActionEvent actionEvent) {
+
+    }
+
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);

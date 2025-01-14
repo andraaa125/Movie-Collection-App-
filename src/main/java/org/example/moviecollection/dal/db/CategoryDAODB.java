@@ -11,7 +11,6 @@ import java.util.List;
 public class CategoryDAODB implements ICategoryDAO {
     private DBConnection con = new DBConnection();
 
-
     @Override
     public List<Category> getAllCategory() throws IOException{
         List<Category> categories = new ArrayList<>();
@@ -34,17 +33,35 @@ public class CategoryDAODB implements ICategoryDAO {
     }
 
     @Override
-    public void deleteCategory(String name) {
+    public void deleteCategory(String name) throws IOException {
         String deleteFromCategory = "DELETE FROM Category WHERE name = ?";
         try {
             Connection c = con.getConnection();
             PreparedStatement stmt = c.prepareStatement(deleteFromCategory);
             stmt.setString(1,name);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting song and its dependencies: " + e.getMessage(), e);
         }
     }
-}
+
+    @Override
+    public void updateCategory(Category category) throws IOException{
+        String updateCategory = "UPDATE Category SET name = ? WHERE id = ?";
+        try {
+            Connection c = con.getConnection();
+            PreparedStatement ps = c.prepareStatement(updateCategory);
+            ps.setString(1,category.getName());
+            ps.setInt(2,category.getId());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    }
+
+
 
 
 
