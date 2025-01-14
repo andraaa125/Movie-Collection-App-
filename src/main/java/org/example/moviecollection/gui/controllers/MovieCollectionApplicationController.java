@@ -113,6 +113,11 @@ public class MovieCollectionApplicationController implements Initializable {
     }
 
     public void onEditCategoryClick(ActionEvent actionEvent) throws IOException {
+        Category selectedCategory = (Category) listViewCategories.getSelectionModel().getSelectedItem();
+        if (selectedCategory == null) {
+            showAlert("No Category Selected","Please select a category to edit");
+            return;
+        }
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("CategoryEditor.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         AddEditCategoryController categoryController = fxmlLoader.getController();
@@ -137,7 +142,7 @@ public class MovieCollectionApplicationController implements Initializable {
                     movieModel.deleteCategory(selectedCategory.getName());
                     listViewCategories.getItems().remove(selectedCategory);
                     listViewCategories.refresh();
-                    showAlert("Success", "The category you choose was successfully deleted.");
+                    showInfo("Success", "The category you choose was successfully deleted.");
                 } catch (Exception e) {
                     showAlert("Error", "An error occurred while deleting the category: " + e.getMessage());
                 }
@@ -195,6 +200,14 @@ public class MovieCollectionApplicationController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void showInfo(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); // Інформаційне повідомлення
+        alert.setTitle(title);
+        alert.setHeaderText(title);
         alert.setContentText(message);
         alert.showAndWait();
     }
