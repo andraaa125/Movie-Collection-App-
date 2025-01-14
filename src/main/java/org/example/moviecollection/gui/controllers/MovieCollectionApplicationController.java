@@ -11,33 +11,65 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.example.moviecollection.MovieCollectionApplication;
-import org.example.moviecollection.dal.db.DBConnection;
-
+import org.example.moviecollection.gui.model.MovieModel;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-
 public class MovieCollectionApplicationController implements Initializable {
-
 
     @FXML
     private Button btnAddCategory;
     @FXML
-    private ListView<String> listViewCategories;
+    private ListView listViewCategories;
 
-    DBConnection dbc = new DBConnection();
-
-    public MovieCollectionApplicationController() throws SQLException {
-    }
+    private final MovieModel movieModel = new MovieModel();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadCategoriesFromDatabase();
 
     }
+    public void loadCategoriesFromDatabase() {
+        listViewCategories.getItems().clear();
+        listViewCategories.setItems(movieModel.getAllCategories());
+    }
+
+
+    /*public void loadCategoriesFromDatabase() {
+        String selectCategorySQL = "SELECT name FROM Category";
+
+        try (Connection con = dbc.getConnection();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(selectCategorySQL)) {
+
+            // Debug: Ensure ListView is initialized
+            if (listViewCategories == null) {
+                System.err.println("ListView is null. Check FXML binding!");
+                return;
+            }
+
+            // Clear the ListView
+            listViewCategories.getItems().clear();
+            System.out.println("ListView cleared.");
+
+            // Fetch categories
+            while (rs.next()) {
+                String categoryName = rs.getString("name");
+                System.out.println("Fetched category: " + categoryName);
+                Platform.runLater(() -> listViewCategories.getItems().add(categoryName));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("SQL error occurred:");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Unexpected error occurred:");
+            e.printStackTrace();
+        }
+    }*/
 
 
     public void onSearchBtnClick(ActionEvent actionEvent) {
@@ -71,7 +103,7 @@ public class MovieCollectionApplicationController implements Initializable {
     }
 
     public void onDeleteCategoryClick(ActionEvent actionEvent) {
-        
+        /*
             // Get the selected category from the ListView
             String selectedCategory = listViewCategories.getSelectionModel().getSelectedItem();
 
@@ -102,7 +134,7 @@ public class MovieCollectionApplicationController implements Initializable {
                 }
             } else {
                 showAlert("Warning", "Please select a category to delete.");
-            }
+            }*/
     }
 
     private void showAlert(String title, String message) {
@@ -138,38 +170,7 @@ public class MovieCollectionApplicationController implements Initializable {
     public void onDeleteMovieClick(ActionEvent actionEvent) {
     }
 
-    public void loadCategoriesFromDatabase() {
-        String selectCategorySQL = "SELECT name FROM Category";
 
-        try (Connection con = dbc.getConnection();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(selectCategorySQL)) {
-
-            // Debug: Ensure ListView is initialized
-            if (listViewCategories == null) {
-                System.err.println("ListView is null. Check FXML binding!");
-                return;
-            }
-
-            // Clear the ListView
-            listViewCategories.getItems().clear();
-            System.out.println("ListView cleared.");
-
-            // Fetch categories
-            while (rs.next()) {
-                String categoryName = rs.getString("name");
-                System.out.println("Fetched category: " + categoryName);
-                Platform.runLater(() -> listViewCategories.getItems().add(categoryName));
-            }
-
-        } catch (SQLException e) {
-            System.err.println("SQL error occurred:");
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Unexpected error occurred:");
-            e.printStackTrace();
-        }
-    }
 
     public void addCategoryToListView(String categoryName) {
         listViewCategories.getItems().add(categoryName);
