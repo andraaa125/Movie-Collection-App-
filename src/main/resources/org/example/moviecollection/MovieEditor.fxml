@@ -106,7 +106,7 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <Rating prefHeight="6.0" prefWidth="176.0" />
+                 <!-- <Rating prefHeight="6.0" prefWidth="176.0" />-->
                </children>
                <VBox.margin>
                   <Insets top="15.0" />
