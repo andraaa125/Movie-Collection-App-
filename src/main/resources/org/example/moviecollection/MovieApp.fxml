@@ -95,7 +95,7 @@
             <Image url="@views/pictures/icons8-play-pause-24.png" />
          </image>
       </ImageView>
-      <Button layoutX="125.0" layoutY="113.0" mnemonicParsing="false" onAction="#onAddMovieClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
+      <Button layoutX="125.0" layoutY="113.0" mnemonicParsing="false" onAction="#onAddCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
