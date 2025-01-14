@@ -24,4 +24,10 @@ public class MovieModel {
     public void deleteCategory(String categoryName) {
         categoryManager.deleteCategory(categoryName);
     }
+
+    public void updateCategory(Category category) throws IOException {
+        categoryManager.updateCategory(category);
+    }
+
+
 }
