@@ -35,7 +35,7 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <TableView layoutX="283.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="609.0">
+      <TableView fx:id="lstMovie" layoutX="283.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="609.0">
         <columns>
           <TableColumn fx:id="IdColumn" prefWidth="51.20001220703125" text="ID" />
           <TableColumn fx:id="TitleColumn" prefWidth="192.0" text="Title" />
