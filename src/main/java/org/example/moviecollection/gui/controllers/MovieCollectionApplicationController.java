@@ -1,6 +1,7 @@
 package org.example.moviecollection.gui.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,11 +14,13 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.example.moviecollection.MovieCollectionApplication;
 import org.example.moviecollection.be.Category;
+import org.example.moviecollection.bll.FilterService;
 import org.example.moviecollection.gui.model.MovieModel;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MovieCollectionApplicationController implements Initializable {
@@ -28,6 +31,8 @@ public class MovieCollectionApplicationController implements Initializable {
     private ListView listViewCategories;
 
     private final MovieModel movieModel = new MovieModel();
+    private final FilterService filterService = new FilterService();
+    private boolean isFilterActive = false; // Track the current state of the button
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,6 +77,29 @@ public class MovieCollectionApplicationController implements Initializable {
             e.printStackTrace();
         }
     }*/
+
+    /*public void onSearchBtnClick(ActionEvent actionEvent) {
+        if (isFilterActive) {
+            // Clear filter
+            lstViewSongs.setItems(FXCollections.observableArrayList(songsModel.getAllSongs()));
+            fieldFilterSearch.clear();
+            btnFilter.setText("Filter");
+            isFilterActive = false;
+        } else {
+            // Apply filter
+            String filterQuery = fieldFilterSearch.getText().trim().toLowerCase();
+            List<Songs> filteredSongs = filterService.filterSongs(
+                    songsModel.getAllSongs(), // Get all songs
+                    filterQuery // Pass query to the filter method
+            );
+            System.out.println("Filtered Songs Count: " + filteredSongs.size());
+            lstViewSongs.setItems(FXCollections.observableArrayList(filteredSongs));
+            btnFilter.setText("Clear");
+            isFilterActive = true;
+        }
+    }*/
+
+
 
     public void onAddCategoryClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("CategoryEditor.fxml"));
