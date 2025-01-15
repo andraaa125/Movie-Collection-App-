@@ -144,7 +144,7 @@ public class MovieCollectionApplicationController implements Initializable {
                     movieModel.deleteCategory(selectedCategory.getName());
                     listViewCategories.getItems().remove(selectedCategory);
                     listViewCategories.refresh();
-                    showInfo("Success", "The category you choose was successfully deleted.");
+                    showInfo("Success", "The category you chose was successfully deleted.");
                 } catch (Exception e) {
                     showAlert("Error", "An error occurred while deleting the category: " + e.getMessage());
                 }
