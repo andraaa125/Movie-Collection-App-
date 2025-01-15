@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.moviecollection.MovieCollectionApplication;
 import org.example.moviecollection.be.Category;
+import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.bll.FilterService;
 import org.example.moviecollection.gui.model.MovieModel;
 
@@ -61,68 +62,11 @@ public class MovieCollectionApplicationController implements Initializable {
         LastViewColumn.setCellValueFactory(new PropertyValueFactory<>("lastView"));
     }
 
-
-    /*public void loadCategoriesFromDatabase() {
-        String selectCategorySQL = "SELECT name FROM Category";
-
-        try (Connection con = dbc.getConnection();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(selectCategorySQL)) {
-
-            // Debug: Ensure ListView is initialized
-            if (listViewCategories == null) {
-                System.err.println("ListView is null. Check FXML binding!");
-                return;
-            }
-
-            // Clear the ListView
-            listViewCategories.getItems().clear();
-            System.out.println("ListView cleared.");
-
-            // Fetch categories
-            while (rs.next()) {
-                String categoryName = rs.getString("name");
-                System.out.println("Fetched category: " + categoryName);
-                Platform.runLater(() -> listViewCategories.getItems().add(categoryName));
-            }
-
-        } catch (SQLException e) {
-            System.err.println("SQL error occurred:");
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Unexpected error occurred:");
-            e.printStackTrace();
-        }
-    }*/
-
-    /*public void onSearchBtnClick(ActionEvent actionEvent) {
-        if (isFilterActive) {
-            // Clear filter
-            lstViewSongs.setItems(FXCollections.observableArrayList(songsModel.getAllSongs()));
-            fieldFilterSearch.clear();
-            btnFilter.setText("Filter");
-            isFilterActive = false;
-        } else {
-            // Apply filter
-            String filterQuery = fieldFilterSearch.getText().trim().toLowerCase();
-            List<Songs> filteredSongs = filterService.filterSongs(
-                    songsModel.getAllSongs(), // Get all songs
-                    filterQuery // Pass query to the filter method
-            );
-            System.out.println("Filtered Songs Count: " + filteredSongs.size());
-            lstViewSongs.setItems(FXCollections.observableArrayList(filteredSongs));
-            btnFilter.setText("Clear");
-            isFilterActive = true;
-        }
-    }*/
-
-
     public void onAddCategoryClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("CategoryEditor.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         AddEditCategoryController categoryController = fxmlLoader.getController();
         categoryController.setParentController(this);
-        categoryController.setCategoryModel(movieModel);
         Stage stage = new Stage();
         stage.setTitle("Add Category");
         stage.setScene(scene);
@@ -139,7 +83,6 @@ public class MovieCollectionApplicationController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         AddEditCategoryController categoryController = fxmlLoader.getController();
         categoryController.setParentController(this);
-        categoryController.setCategoryModel(movieModel);
         categoryController.setCategoryToEdit(selectedCategory);
         Stage stage = new Stage();
         stage.setTitle("Edit Category");
@@ -169,40 +112,7 @@ public class MovieCollectionApplicationController implements Initializable {
         } else {
             // Show a warning if no song is selected
             showAlert("No Category Was Selected", "Please select a category to delete.");
-
         }
-        /*
-            // Get the selected category from the ListView
-            String selectedCategory = listViewCategories.getSelectionModel().getSelectedItem();
-
-            if (selectedCategory != null) {
-                try {
-                    //  Retrieve the database connection
-                    Connection con = dbc.getConnection(); // Fetch actual Connection object from dbc
-
-                    //  Prepare the SQL query
-                    String deleteSQL = "DELETE FROM Category WHERE name = ?";
-                    PreparedStatement pstmt = con.prepareStatement(deleteSQL);
-                    pstmt.setString(1, selectedCategory);
-
-                    //  Execute the query
-                    int affectedRows = pstmt.executeUpdate();
-                    pstmt.close();
-
-                    //  Check if deletion was successful
-                    if (affectedRows > 0) {
-
-                        listViewCategories.getItems().remove(selectedCategory);
-                        showAlert("Success", "Category '" + selectedCategory + "' has been deleted.");
-                    } else {
-                        showAlert("Error", "Could not delete category.");
-                    }
-                } catch (SQLException e) {
-                    showAlert("Database Error", "Error deleting category: " + e.getMessage());
-                }
-            } else {
-                showAlert("Warning", "Please select a category to delete.");
-            }*/
     }
 
     public void onSearchBtnClick(ActionEvent actionEvent) {
@@ -235,18 +145,23 @@ public class MovieCollectionApplicationController implements Initializable {
         AddEditMovieController movieController = fxmlLoader.getController();
         movieController.setParentController(this);
         Stage stage = new Stage();
-        stage.setTitle("Add/Edit Movie");
+        stage.setTitle("Add Movie");
         stage.setScene(scene);
         stage.show();
     }
 
     public void onEditMovieClick(ActionEvent actionEvent) throws IOException {
+        Movie selectedMovie = (Movie) lstMovie.getSelectionModel().getSelectedItem();
+        if (selectedMovie == null) {
+            showAlert("No Movie Selected","Please select a movie to edit");
+            return;
+        }
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("MovieEditor.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         AddEditMovieController movieController = fxmlLoader.getController();
         movieController.setParentController(this);
         Stage stage = new Stage();
-        stage.setTitle("Add/Edit Movie");
+        stage.setTitle("Edit Movie");
         stage.setScene(scene);
         stage.show();
     }
@@ -255,8 +170,4 @@ public class MovieCollectionApplicationController implements Initializable {
     }
 
 
-
-    public void addCategoryToListView(String categoryName) {
-        listViewCategories.getItems().add(categoryName);
-    }
 }

@@ -21,7 +21,7 @@ public class Movie {
     }
 
     //This constructor is for getting a movie from a folder
-    public Movie (String name, String filePath) {
+    public Movie (String name, String filePath, String category) {
         this.name = name;
         this.filePath = filePath;
     }

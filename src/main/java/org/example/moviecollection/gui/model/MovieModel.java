@@ -55,4 +55,15 @@ public class MovieModel {
         }
         return movies;
     }
+
+    public void addMovie(Movie newMovie) throws IOException {
+        movieManager.addMovie(newMovie);
+    }
+
+    public void deleteMovie(String name) throws IOException {
+        movieManager.deleteMovie(name);
+    }
+    public void updateMovie(Movie movie) throws IOException {
+        movieManager.updateMovie(movie);
+    }
 }

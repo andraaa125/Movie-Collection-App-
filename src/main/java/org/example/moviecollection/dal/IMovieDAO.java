@@ -7,12 +7,9 @@ import java.util.List;
 
 public interface IMovieDAO {
     List<Movie> getAllMovies() throws IOException;
-
-
-    /*Movie add(Movie movie) throws MovieCollectionAppExceptions;
-    void update(Movie movie) throws MovieCollectionAppExceptions;
-    void update (Movie movie, Movie newMovie) throws MovieCollectionAppExceptions;*/
-
+    void addMovie(Movie movie) throws IOException;
+    void deleteMovie(String name) throws IOException;
+    void updateMovie(Movie movie) throws IOException;
 }
 
 

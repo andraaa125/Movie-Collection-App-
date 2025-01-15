@@ -33,13 +33,56 @@ public class MovieDAODB implements IMovieDAO {
                 Movie movie = new Movie(id, name, imdbRating, personalRating, filePath, lastViewDate);
                 allMovies.add(movie);
             }
-            System.out.println("Fetched Movies: " + allMovies);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new IOException("Error fetching movies from the database: " + e.getMessage(), e);
+            throw new IOException("Error fetching movies from database: " + e.getMessage(), e);
         }
         return allMovies;
     }
+
+    @Override
+    public void addMovie(Movie movie) throws IOException{
+        String sql = "INSERT INTO Movie (name, imdb_Rating, personal_rating, file_path, last_viewed) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = con.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, movie.getName());
+            ps.setDouble(2, movie.getImdbRating());
+            ps.setDouble(3, movie.getPersonalRating());
+            ps.setString(4, movie.getFilePath());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new IOException("Error adding movie to database: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void deleteMovie(String name) throws IOException{
+        String deleteFromMovie = "DELETE FROM Movie WHERE name = ?";
+        String deleteFromCatMovie = "DELETE FROM Movie WHERE name = ?";
+        try (Connection connection = con.getConnection();
+        PreparedStatement ps1 = connection.prepareStatement(deleteFromMovie)) {
+            ps1.setString(1, name);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting movie and its dependencies: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void updateMovie(Movie movie) throws IOException{
+        String sql = "UPDATE Movie SET name = ?, personal_rating = ?, file_path = ?, last_viewed = ? WHERE name = ? AND imdb_rating = ? AND personal_rating = ?";
+        try (Connection connection = con.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+             ps.setString(1, movie.getName());
+             ps.setDouble(2, movie.getImdbRating());
+             ps.setDouble(3, movie.getPersonalRating());
+             ps.setString(4, movie.getFilePath());
+             //ps.setDate(5,movie.getLastView());                     );
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting movie and its dependencies: " + e.getMessage(), e);
+        }
+    }
+
+
 
     //This method checks if a movie exists in the database
     /*private boolean movieExists(Movie movie) throws SQLException {

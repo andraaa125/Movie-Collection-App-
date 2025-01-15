@@ -15,4 +15,15 @@ public class MovieManager {
         return movieDAO.getAllMovies();
     }
 
+    public void addMovie(Movie movie) throws IOException{
+        movieDAO.addMovie(movie);
+    }
+
+    public void deleteMovie(String name) throws IOException{
+        movieDAO.deleteMovie(name);
+    }
+
+    public void updateMovie(Movie movie) throws IOException{
+        movieDAO.updateMovie(movie);
+    }
 }

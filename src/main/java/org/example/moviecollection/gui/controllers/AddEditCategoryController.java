@@ -13,19 +13,12 @@ public class AddEditCategoryController {
     private TextField txtAddEditCategory;
 
     private MovieCollectionApplicationController movieCollectionApplicationController;
-    private MovieModel movieModel;
+    private MovieModel movieModel = new MovieModel();
     private Category categoryToEdit;
 
     public void setParentController(MovieCollectionApplicationController parentController) {
         this.movieCollectionApplicationController = parentController;
     }
-
-    public void setCategoryModel(MovieModel movieModel) {
-        this.movieModel = movieModel;
-    }
-
-/*    public AddEditCategoryController() throws SQLException {
-    }*/
 
     public void setCategoryToEdit(Category categoryToEdit) {
         this.categoryToEdit = categoryToEdit;
