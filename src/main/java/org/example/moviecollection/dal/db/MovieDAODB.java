@@ -30,7 +30,7 @@ public class MovieDAODB implements IMovieDAO {
                 double personalRating = rs.getDouble("personal_rating");
                 String filePath = rs.getString("file_path");
                 Date lastViewDate = rs.getDate("last_viewed");
-                Movie movie = new Movie(name, filePath);
+                Movie movie = new Movie(id, name, imdbRating, personalRating, filePath, lastViewDate);
                 allMovies.add(movie);
             }
         } catch (SQLException e) {

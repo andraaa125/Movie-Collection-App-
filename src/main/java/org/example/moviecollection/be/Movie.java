@@ -11,7 +11,7 @@ public class Movie {
     private Date lastView;
 
     //This constructor is for the database methods
-    public Movie(String name, String filePath) {
+    public Movie(int id, String name, double imdbRating, double personalRating, String filePath, Date lastView) {
         this.id = id;
         this.name = name;
         this.imdbRating = imdbRating;

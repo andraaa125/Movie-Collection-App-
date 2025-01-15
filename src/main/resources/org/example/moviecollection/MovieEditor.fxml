@@ -4,17 +4,18 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import org.controlsfx.control.Rating?>
 
-<AnchorPane prefHeight="447.0" prefWidth="600.0" styleClass="movieWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.AddEditMovieController">
+<AnchorPane prefHeight="543.0" prefWidth="600.0" styleClass="movieWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.AddEditMovieController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutY="20.0" prefHeight="427.0" prefWidth="600.0">
+      <VBox alignment="TOP_CENTER" layoutY="9.0" prefHeight="461.0" prefWidth="600.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="173.0" text="Add/Edit Movie" textAlignment="CENTER">
                <font>
@@ -24,11 +25,11 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </Label>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="600.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" textAlignment="RIGHT" wrappingWidth="142.79998779296875">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Name:" textAlignment="RIGHT" wrappingWidth="142.79998779296875">
                      <HBox.margin>
-                        <Insets left="80.0" right="15.0" />
+                        <Insets left="50.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
@@ -41,14 +42,14 @@
                   </TextField>
                </children>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="600.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="File Path:" textAlignment="RIGHT" wrappingWidth="142.800048828125">
                      <HBox.margin>
-                        <Insets left="80.0" right="15.0" />
+                        <Insets left="50.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
@@ -61,28 +62,36 @@
                   </TextField>
                   <Button mnemonicParsing="false" onAction="#onChooseClick" prefHeight="26.0" prefWidth="66.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Choose">
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Button>
                </children>
-               <padding>
+               <VBox.margin>
                   <Insets top="20.0" />
-               </padding>
+               </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="600.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category: " textAlignment="RIGHT" wrappingWidth="143.60003662109375">
                      <HBox.margin>
-                        <Insets left="80.0" right="15.0" />
+                        <Insets left="50.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
                   <ComboBox fx:id="comboBox" opacity="0.9" prefHeight="26.0" prefWidth="175.0" />
+                  <Button mnemonicParsing="false" onAction="#onLoadMoreClick" prefHeight="26.0" prefWidth="66.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Add">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#onLoadMoreClick" prefHeight="26.0" prefWidth="66.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="More">
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -93,44 +102,100 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="600.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="175.0" prefHeight="200.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Rating: " textAlignment="RIGHT" wrappingWidth="141.99993896484375">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category: " textAlignment="RIGHT" wrappingWidth="143.60003662109375">
                      <HBox.margin>
-                        <Insets left="80.0" right="15.0" />
+                        <Insets left="50.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <Rating />
-                 <!-- <Rating prefHeight="6.0" prefWidth="176.0" />-->
-               </children>
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="165.0" prefWidth="600.0" spacing="20.0">
-               <children>
-                  <Button fx:id="btnCancelMovie" mnemonicParsing="false" onAction="#onCancelMovieClick" prefHeight="30.0" prefWidth="62.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Cancel">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onSaveMovieClick" prefHeight="30.0" prefWidth="62.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Save">
+                  <ListView fx:id="lstCategory" prefHeight="75.0" prefWidth="175.0" />
+                  <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="26.0" prefWidth="66.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Remove">
                      <font>
                         <Font size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="100.0" />
+                        <Insets left="15.0" />
                      </HBox.margin>
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets />
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IMDB Rating: " textAlignment="RIGHT" wrappingWidth="141.99993896484375">
+                     <HBox.margin>
+                        <Insets left="50.0" right="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Slider fx:id="IMDBGradeSlider" blockIncrement="1.0" majorTickUnit="0.5" max="10.0" prefHeight="14.0" prefWidth="178.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+                  <Label fx:id="IMDBScore" contentDisplay="CENTER" prefHeight="31.0" prefWidth="52.0" text="5.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                 <!-- <Rating prefHeight="6.0" prefWidth="176.0" />-->
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="236.0" prefHeight="45.0" prefWidth="600.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Rating: " textAlignment="RIGHT" wrappingWidth="141.99993896484375">
+                     <HBox.margin>
+                        <Insets left="50.0" right="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Slider fx:id="PersonalGradeSlider" blockIncrement="1.0" majorTickUnit="0.5" max="10.0" prefHeight="14.0" prefWidth="178.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+                  <Label fx:id="PersonalScore" prefHeight="31.0" prefWidth="50.0" text="5.0">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <Button fx:id="btnCancelMovie" mnemonicParsing="false" onAction="#onCancelMovieClick" prefHeight="81.0" prefWidth="85.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Cancel">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onSaveMovieClick" prefHeight="27.0" prefWidth="85.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Save">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="40.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="80.0" />
                </VBox.margin>
             </HBox>
          </children>

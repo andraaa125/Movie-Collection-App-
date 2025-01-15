@@ -46,12 +46,13 @@ public class MovieCollectionApplicationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadCategoriesFromDatabase();
         loadMoviesFromDatabase();
-
     }
+
     public void loadCategoriesFromDatabase() {
         listViewCategories.getItems().clear();
         listViewCategories.setItems(movieModel.getAllCategories());
     }
+
     public void loadMoviesFromDatabase() {
         lstMovie.getItems().clear();
         lstMovie.setItems(movieModel.getAllMovies());
