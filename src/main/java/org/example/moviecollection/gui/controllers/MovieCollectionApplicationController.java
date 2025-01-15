@@ -100,12 +100,12 @@ public class MovieCollectionApplicationController implements Initializable {
     }*/
 
 
-
     public void onAddCategoryClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("CategoryEditor.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         AddEditCategoryController categoryController = fxmlLoader.getController();
         categoryController.setParentController(this);
+        categoryController.setCategoryModel(movieModel);
         Stage stage = new Stage();
         stage.setTitle("Add/Edit Category");
         stage.setScene(scene);
@@ -194,9 +194,7 @@ public class MovieCollectionApplicationController implements Initializable {
 
     }
 
-
-
-    private void showAlert(String title, String message) {
+    public void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(null);

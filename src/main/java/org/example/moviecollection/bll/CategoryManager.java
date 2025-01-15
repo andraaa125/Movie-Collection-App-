@@ -14,20 +14,23 @@ public class CategoryManager {
         return categoryDAO.getAllCategory();
     }
 
-    public void deleteCategory(String name) {
+    public void deleteCategory(String name) throws IOException {
+        categoryDAO.deleteCategory(name);
+    }
+
+    public void addCategory(Category category) throws IOException {
+        //categoryDAO.addCategory(category);
         try {
-            categoryDAO.deleteCategory(name);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            categoryDAO.addCategory(category);
+            System.out.println("Successfully added category: " + category.getName());
+        } catch (Exception e) {
+            System.err.println("Error in CategoryManager.addCategory: " + e.getMessage());
+            throw new IOException("Failed to add category: " + category.getName(), e);
         }
     }
 
-    public void updateCategory(Category category) {
-        try {
-            categoryDAO.updateCategory(category);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void updateCategory(Category category) throws IOException {
+        categoryDAO.updateCategory(category);
     }
 
 

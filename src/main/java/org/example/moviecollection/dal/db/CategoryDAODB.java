@@ -33,7 +33,7 @@ public class CategoryDAODB implements ICategoryDAO {
     }
 
     @Override
-    public void deleteCategory(String name) throws IOException {
+    public void deleteCategory(String name) {
         String deleteFromCategory = "DELETE FROM Category WHERE name = ?";
         try {
             Connection c = con.getConnection();
@@ -46,7 +46,26 @@ public class CategoryDAODB implements ICategoryDAO {
     }
 
     @Override
-    public void updateCategory(Category category) throws IOException{
+    public void addCategory(Category category) {
+        String addCategory = "INSERT INTO Category (name) VALUES (?)";
+        try {
+            Connection c = con.getConnection();
+            PreparedStatement ps = c.prepareStatement(addCategory, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,category.getName());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Failed to insert category; no rows affected.");
+            }
+            System.out.println("Category added: " + category.getName());
+
+        } catch (SQLException e) {
+            System.err.println("SQL Error during category insertion: " + e.getMessage());
+            throw new RuntimeException("Failed to add category: " + category.getName(), e);
+        }
+    }
+
+    @Override
+    public void updateCategory(Category category) {
         String updateCategory = "UPDATE Category SET name = ? WHERE id = ?";
         try {
             Connection c = con.getConnection();

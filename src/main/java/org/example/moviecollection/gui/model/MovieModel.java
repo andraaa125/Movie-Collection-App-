@@ -21,13 +21,23 @@ public class MovieModel {
         }
         return categories;
     }
-    public void deleteCategory(String categoryName) {
+    public void deleteCategory(String categoryName) throws IOException {
         categoryManager.deleteCategory(categoryName);
+    }
+
+    public void addCategory(Category newCategory) throws IOException {
+        //categoryManager.addCategory(newCategory);
+        try {
+            categoryManager.addCategory(newCategory);
+            categories.add(newCategory); // Add the new category to the observable list
+            System.out.println("Category added to MovieModel: " + newCategory.getName());
+        } catch (Exception e) {
+            System.err.println("Error in MovieModel.addCategory: " + e.getMessage());
+            throw new IOException("Failed to add category in MovieModel.", e);
+        }
     }
 
     public void updateCategory(Category category) throws IOException {
         categoryManager.updateCategory(category);
     }
-
-
 }

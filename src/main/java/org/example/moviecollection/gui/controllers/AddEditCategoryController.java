@@ -3,8 +3,10 @@ package org.example.moviecollection.gui.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.db.DBConnection;
+import org.example.moviecollection.gui.model.MovieModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,14 +18,23 @@ public class AddEditCategoryController {
     private TextField txtAddEditCategory;
 
     private MovieCollectionApplicationController movieCollectionApplicationController;
-    DBConnection dbc = new DBConnection();
-    private MovieCollectionApplicationController parentController;
-
-    public AddEditCategoryController() throws SQLException {
-    }
+    private MovieModel movieModel;
+    private Category categoryToEdit;
 
     public void setParentController(MovieCollectionApplicationController parentController) {
         this.movieCollectionApplicationController = parentController;
+    }
+
+    public void setCategoryModel(MovieModel movieModel) {
+        this.movieModel = movieModel;
+    }
+
+/*    public AddEditCategoryController() throws SQLException {
+    }*/
+
+    public void setCategoryToEdit(Category categoryToEdit) {
+        this.categoryToEdit = categoryToEdit;
+        txtAddEditCategory.setText(categoryToEdit.getName());
     }
 
     public void onCancelCategoryClick(ActionEvent actionEvent) {
@@ -31,6 +42,35 @@ public class AddEditCategoryController {
     }
 
     public void onSaveCategoryClick(ActionEvent actionEvent) {
+        try {
+            String newCategoryName = txtAddEditCategory.getText().trim();
+            if (newCategoryName.isEmpty()) {
+                movieCollectionApplicationController.showAlert("Error", "Category name cannot be empty!");
+                return;
+            }
+            if (categoryToEdit != null) {
+                categoryToEdit.setName(newCategoryName);
+                movieModel.updateCategory(categoryToEdit);
+                System.out.println("Category updated: " + newCategoryName);
+            } else {
+                Category newCategory = new Category(0, newCategoryName);
+                movieModel.addCategory(newCategory);
+                System.out.println("New category added: " + newCategoryName);
+            }
+            movieCollectionApplicationController.loadCategoriesFromDatabase();
+            ((javafx.stage.Stage) txtAddEditCategory.getScene().getWindow()).close();
+
+        } catch (Exception e) {
+            if (e.getMessage().contains("Duplicate entry")) {
+                movieCollectionApplicationController.showAlert("Error", "Category already exists!");
+            } else {
+                movieCollectionApplicationController.showAlert("Error", "An error occurred: " + e.getMessage());
+                System.err.println("Error during category save: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+    /*public void onSaveCategoryClick(ActionEvent actionEvent) {
         // Get the category name from the input field
         String categoryName = txtAddEditCategory.getText().trim();
 
@@ -70,14 +110,15 @@ public class AddEditCategoryController {
         } catch (Exception e) {
             showAlert("Error", "Failed to add category: " + e.getMessage());
         }
-    }
+    }*/
 
-
-    private void showAlert(String title, String message) {
+/*
+    public void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null); // Optional: You can provide a header if needed
         alert.setContentText(message);
         alert.showAndWait();
+    }*/
     }
 }
