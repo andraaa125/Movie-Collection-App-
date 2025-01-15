@@ -5,13 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
-import org.example.moviecollection.dal.db.DBConnection;
 import org.example.moviecollection.gui.model.MovieModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 public class AddEditCategoryController {
     @FXML
