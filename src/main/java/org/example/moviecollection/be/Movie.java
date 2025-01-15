@@ -10,7 +10,6 @@ public class Movie {
     private String filePath;
     private Date lastView;
 
-
     //This constructor is for the database methods
     public Movie(int id, String name, double imdbRating, double personalRating, String filePath, Date lastView) {
         this.id = id;
@@ -31,24 +30,52 @@ public class Movie {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getImdbRating() {
         return imdbRating;
     }
 
+    public void setImdbRating(double imdbRating) {
+        this.imdbRating = imdbRating;
+    }
+
     public double getPersonalRating() {
         return personalRating;
+    }
+
+    public void setPersonalRating(double personalRating) {
+        this.personalRating = personalRating;
     }
 
     public String getFilePath() {
         return filePath;
     }
 
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
     public Date getLastView() {
         return lastView;
     }
-    
+
+    public void setLastView(Date lastView) {
+        this.lastView = lastView;
+    }
+
+    @Override
+    public String toString() {
+        return id + "," + name + "," + imdbRating + "," + personalRating + "," + lastView;
+    }
 }

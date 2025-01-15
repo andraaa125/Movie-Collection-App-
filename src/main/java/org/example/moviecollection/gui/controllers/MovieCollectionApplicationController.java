@@ -7,10 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.moviecollection.MovieCollectionApplication;
 import org.example.moviecollection.be.Category;
@@ -24,9 +22,18 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MovieCollectionApplicationController implements Initializable {
-
     @FXML
-    private Button btnAddCategory;
+    private TableColumn IdColumn;
+    @FXML
+    private TableView lstMovie;
+    @FXML
+    private TableColumn NameColumn;
+    @FXML
+    private TableColumn IMDbRatingColumn;
+    @FXML
+    private TableColumn MyRatingColumn;
+    @FXML
+    private TableColumn LastViewColumn;
     @FXML
     private ListView listViewCategories;
 
@@ -37,11 +44,21 @@ public class MovieCollectionApplicationController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadCategoriesFromDatabase();
+        loadMoviesFromDatabase();
 
     }
     public void loadCategoriesFromDatabase() {
         listViewCategories.getItems().clear();
         listViewCategories.setItems(movieModel.getAllCategories());
+    }
+    public void loadMoviesFromDatabase() {
+        lstMovie.getItems().clear();
+        lstMovie.setItems(movieModel.getAllMovies());
+        IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        IMDbRatingColumn.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
+        MyRatingColumn.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
+        LastViewColumn.setCellValueFactory(new PropertyValueFactory<>("lastView"));
     }
 
 

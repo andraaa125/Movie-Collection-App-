@@ -15,7 +15,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.89" prefHeight="652.0" prefWidth="926.0" styleClass="mainWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.MovieCollectionApplicationController">
    <children>
       <HBox layoutY="-1.0" prefHeight="67.0" prefWidth="926.0" styleClass="header" stylesheets="@views/Style.css" />
-      <ListView fx:id="listViewCategories" layoutX="33.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="220.0" />
+      <ListView fx:id="listViewCategories" layoutX="33.0" layoutY="153.0" opacity="0.9" prefHeight="410.0" prefWidth="220.0" />
       <TextField layoutX="624.0" layoutY="17.0" opacity="0.9" prefHeight="35.0" prefWidth="220.0" />
       <Button layoutX="853.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="35.0" prefWidth="35.0" styleClass="btnSearch">
          <graphic>
@@ -35,12 +35,12 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <TableView fx:id="lstMovie" layoutX="283.0" layoutY="146.0" opacity="0.9" prefHeight="410.0" prefWidth="609.0">
+      <TableView fx:id="lstMovie" layoutX="283.0" layoutY="153.0" opacity="0.9" prefHeight="410.0" prefWidth="609.0">
         <columns>
           <TableColumn fx:id="IdColumn" prefWidth="51.20001220703125" text="ID" />
-          <TableColumn fx:id="TitleColumn" prefWidth="192.0" text="Title" />
-            <TableColumn fx:id="MyRatingColumn" prefWidth="108.800048828125" text="My Rating" />
+          <TableColumn fx:id="NameColumn" prefWidth="192.0" text="Name" />
             <TableColumn fx:id="IMDbRatingColumn" minWidth="8.0" prefWidth="118.39990234375" text="IMDb Rating" />
+            <TableColumn fx:id="MyRatingColumn" prefWidth="108.800048828125" text="My Rating" />
             <TableColumn fx:id="LastViewColumn" minWidth="8.0" prefWidth="136.80001220703127" text="Last View" />
         </columns>
       </TableView>

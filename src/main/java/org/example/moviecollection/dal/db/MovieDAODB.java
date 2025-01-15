@@ -1,7 +1,9 @@
 package org.example.moviecollection.dal.db;
 
 import org.example.moviecollection.be.Movie;
+import org.example.moviecollection.dal.IMovieDAO;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,44 +12,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
-public class MovieDAODB {
+public class MovieDAODB implements IMovieDAO {
+    private DBConnection con = new DBConnection();
 
-    private DBConnection dbConnection = new DBConnection();
-    public MovieDAODB() throws SQLException {}
-    public DBConnection getDbConnection() {
-        return dbConnection;
-    }
-    public void setDbConnection(DBConnection dbConnection) {
-        this.dbConnection = dbConnection;
-    }
-
-    public List<Movie> getALlMovies(){
+    @Override
+    public List<Movie> getAllMovies() throws IOException {
         List<Movie> allMovies = new ArrayList<>();
-        String sql = "SELECT * FROM Movies";
-
-        try (Statement statement = dbConnection.getConnection().createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-
-            while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                double imdbRating = resultSet.getDouble("imdb_rating");
-                double personalRating = resultSet.getDouble("personal_rating");
-                String filePath = resultSet.getString("file_path");
-                Date lastViewDate = resultSet.getDate("last_viewed");
-
+        try {
+            Connection c = con.getConnection();
+            String sql = "SELECT * FROM movie";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double imdbRating = rs.getDouble("imdb_rating");
+                double personalRating = rs.getDouble("personal_rating");
+                String filePath = rs.getString("file_path");
+                Date lastViewDate = rs.getDate("last_viewed");
                 Movie movie = new Movie(id, name, imdbRating, personalRating, filePath, lastViewDate);
                 allMovies.add(movie);
             }
             System.out.println("Fetched Movies: " + allMovies);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new IOException("Error fetching movies from the database: " + e.getMessage(), e);
         }
         return allMovies;
     }
 
     //This method checks if a movie exists in the database
-    private boolean movieExists(Movie movie) throws SQLException {
+    /*private boolean movieExists(Movie movie) throws SQLException {
         String sql = "SELECT * FROM Movies WHERE name=?";
         try (Connection connection = dbConnection.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -129,6 +124,6 @@ public class MovieDAODB {
                 return false;
             }
         }
-    }
+    }*/
 
 }
