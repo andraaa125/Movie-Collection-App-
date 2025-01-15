@@ -1,5 +1,6 @@
 package org.example.moviecollection.bll;
 
+import javafx.collections.ObservableList;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.dal.ICategoryDAO;
 import org.example.moviecollection.dal.db.CategoryDAODB;
@@ -32,6 +33,5 @@ public class CategoryManager {
     public void updateCategory(Category category) throws IOException {
         categoryDAO.updateCategory(category);
     }
-
 
 }

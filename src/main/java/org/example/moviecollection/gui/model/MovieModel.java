@@ -8,7 +8,9 @@ import org.example.moviecollection.bll.CategoryManager;
 import org.example.moviecollection.bll.MovieManager;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MovieModel {
     private final CategoryManager categoryManager = new CategoryManager();
@@ -66,4 +68,19 @@ public class MovieModel {
     public void updateMovie(Movie movie) throws IOException {
         movieManager.updateMovie(movie);
     }
+
+    public ObservableList<String> displayCategoryName() throws IOException {
+        Set<String> categorySet = new HashSet<>(); // Use a Set to automatically remove duplicates
+        List<Category> categories = categoryManager.getAllCategory();
+        for (Category category : categories) {
+            String categoryName = category.getName();
+            if (categoryName != null && !categoryName.isEmpty()) {
+                categorySet.add(categoryName);
+            }
+        }
+        // Convert the Set to an ObservableList
+        return FXCollections.observableArrayList(categorySet);
+    }
+
+
 }
