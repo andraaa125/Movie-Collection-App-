@@ -107,7 +107,7 @@ public class MovieCollectionApplicationController implements Initializable {
         categoryController.setParentController(this);
         categoryController.setCategoryModel(movieModel);
         Stage stage = new Stage();
-        stage.setTitle("Add/Edit Category");
+        stage.setTitle("Add Category");
         stage.setScene(scene);
         stage.show();
     }
@@ -122,8 +122,10 @@ public class MovieCollectionApplicationController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         AddEditCategoryController categoryController = fxmlLoader.getController();
         categoryController.setParentController(this);
+        categoryController.setCategoryModel(movieModel);
+        categoryController.setCategoryToEdit(selectedCategory);
         Stage stage = new Stage();
-        stage.setTitle("Add/Edit Category");
+        stage.setTitle("Edit Category");
         stage.setScene(scene);
         stage.show();
     }
