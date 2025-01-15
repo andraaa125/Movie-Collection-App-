@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="543.0" prefWidth="600.0" styleClass="movieWindow" stylesheets="@views/Style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.moviecollection.gui.controllers.AddEditMovieController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutY="9.0" prefHeight="461.0" prefWidth="600.0">
+      <VBox alignment="TOP_CENTER" prefHeight="543.0" prefWidth="600.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="173.0" text="Add/Edit Movie" textAlignment="CENTER">
                <font>
@@ -105,7 +105,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="175.0" prefHeight="200.0" prefWidth="600.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="175.0" prefHeight="76.0" prefWidth="600.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category: " textAlignment="RIGHT" wrappingWidth="143.60003662109375">
                      <HBox.margin>
@@ -115,7 +115,7 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <ListView fx:id="lstCategory" prefHeight="75.0" prefWidth="175.0" />
+                  <ListView fx:id="lstCategory" prefHeight="73.0" prefWidth="175.0" />
                   <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="26.0" prefWidth="66.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Remove">
                      <font>
                         <Font size="13.0" />
@@ -178,14 +178,14 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="600.0" spacing="20.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="82.0" prefWidth="600.0" spacing="20.0">
                <children>
-                  <Button fx:id="btnCancelMovie" mnemonicParsing="false" onAction="#onCancelMovieClick" prefHeight="81.0" prefWidth="85.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Cancel">
+                  <Button fx:id="btnCancelMovie" mnemonicParsing="false" onAction="#onCancelMovieClick" prefHeight="32.0" prefWidth="85.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Cancel">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onSaveMovieClick" prefHeight="27.0" prefWidth="85.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Save">
+                  <Button mnemonicParsing="false" onAction="#onSaveMovieClick" prefHeight="32.0" prefWidth="85.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Save">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -195,7 +195,7 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets top="80.0" />
+                  <Insets bottom="10.0" top="40.0" />
                </VBox.margin>
             </HBox>
          </children>

@@ -168,6 +168,30 @@ public class MovieCollectionApplicationController implements Initializable {
     }
 
     public void onDeleteMovieClick(ActionEvent actionEvent) {
+        Movie selectedMovie = (Movie) lstMovie.getSelectionModel().getSelectedItem();
+        if (selectedMovie != null) {
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirm Delete Movie");
+            confirmationAlert.setHeaderText("Are you sure you want to delete this movie?");
+            confirmationAlert.setContentText("Movie: " + selectedMovie.getName());
+
+            // Wait for the user's response
+            var result = confirmationAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    // Delete the song from the database via the model
+                    movieModel.deleteMovie(selectedMovie.getName());
+                    lstMovie.getItems().remove(selectedMovie);
+                    lstMovie.refresh();
+                    // Inform the user about the successful deletion
+                    showInfo("Success", "The song was successfully deleted.");
+                } catch (Exception e) {
+                    showAlert("Error", "An error occurred while deleting the song: " + e.getMessage());
+                }
+            }
+        } else {
+            showAlert("No Movie Selected","Please select a movie to delete");
+        }
     }
 
 

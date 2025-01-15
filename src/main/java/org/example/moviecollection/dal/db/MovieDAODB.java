@@ -57,11 +57,12 @@ public class MovieDAODB implements IMovieDAO {
 
     @Override
     public void deleteMovie(String name) throws IOException{
-        String deleteFromMovie = "DELETE FROM Movie WHERE name = ?";
+        String deleteMovie = "DELETE FROM Movie WHERE name = ?";
         String deleteFromCatMovie = "DELETE FROM Movie WHERE name = ?";
         try (Connection connection = con.getConnection();
-        PreparedStatement ps1 = connection.prepareStatement(deleteFromMovie)) {
+            PreparedStatement ps1 = connection.prepareStatement(deleteMovie)) {
             ps1.setString(1, name);
+            ps1.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting movie and its dependencies: " + e.getMessage(), e);
         }

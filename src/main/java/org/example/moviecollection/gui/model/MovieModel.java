@@ -65,6 +65,7 @@ public class MovieModel {
     public void deleteMovie(String name) throws IOException {
         movieManager.deleteMovie(name);
     }
+
     public void updateMovie(Movie movie) throws IOException {
         movieManager.updateMovie(movie);
     }
