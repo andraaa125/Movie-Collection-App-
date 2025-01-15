@@ -52,3 +52,39 @@
     -fx-background-size: cover; /* Adjusts image size to cover entire area */
     -fx-background-repeat: no-repeat; /* Avoid repeating the image */
 }
+
+.slider .track {
+    -fx-background-color: #f2be6d;
+    -fx-background-radius: 5;
+}
+
+.slider .thumb {
+    -fx-background-color: #ff9800; /* Orange color */
+    -fx-border-color: #333; /* Border around the thumb */
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 2);
+}
+
+.slider .tick-mark {
+    -fx-stroke: #000000; /* Black tick marks */
+}
+
+.slider .tick-label {
+    -fx-text-fill: #555; /* Gray tick labels */
+    -fx-font-size: 12px; /* Adjust font size */
+    -fx-font-family: "Arial";
+}
+
+/* Style for the Personal/IMDB score label */
+#IMDBScore, #PersonalScore{
+    -fx-text-fill: orange; /* Orange text color */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: #fff3e0; /* Light orange background */
+    -fx-padding: 5;
+    -fx-border-color: orange; /* Border color */
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}

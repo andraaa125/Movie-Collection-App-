@@ -1,5 +1,7 @@
 package org.example.moviecollection.be;
 
+import javafx.collections.ObservableList;
+
 import java.util.Date;
 
 public class Movie {
@@ -9,8 +11,8 @@ public class Movie {
     private double personalRating;
     private String filePath;
     private Date lastView;
+    private ObservableList<String> categories;
 
-    //This constructor is for the database methods
     public Movie(int id, String name, double imdbRating, double personalRating, String filePath, Date lastView) {
         this.id = id;
         this.name = name;
@@ -20,10 +22,30 @@ public class Movie {
         this.lastView = lastView;
     }
 
-    //This constructor is for getting a movie from a folder
-    public Movie (String name, String filePath, String category) {
+    public Movie(String movieName, Double imdbRating, Double personalRating, String moviePath, ObservableList<String> selectedCategories) {
+        this.name = movieName;
+        this.imdbRating = imdbRating;
+        this.personalRating = personalRating;
+        this.filePath = moviePath;
+        this.categories = selectedCategories;
+    }
+
+    // Getter and setter for lastViewDate
+    public Date getLastView() {
+        return lastView;
+    }
+
+    public void setLastViewDate(Date lastView) {
+        this.lastView = lastView;
+    }
+
+
+    public Movie(int id, String name, Double imdbRating, Double personalRating, String filePath, java.sql.Date lastViewDate) {
         this.name = name;
+        this.imdbRating = imdbRating;
+        this.personalRating = personalRating;
         this.filePath = filePath;
+
     }
 
     public int getId() {
@@ -64,14 +86,6 @@ public class Movie {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
-    }
-
-    public Date getLastView() {
-        return lastView;
-    }
-
-    public void setLastView(Date lastView) {
-        this.lastView = lastView;
     }
 
     @Override

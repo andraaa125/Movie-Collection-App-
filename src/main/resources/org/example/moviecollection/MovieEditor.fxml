@@ -27,9 +27,9 @@
             </Label>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Name:" textAlignment="RIGHT" wrappingWidth="142.79998779296875">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Name:" textAlignment="RIGHT" wrappingWidth="162.0">
                      <HBox.margin>
-                        <Insets left="50.0" right="15.0" />
+                        <Insets left="40.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
@@ -47,9 +47,9 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="File Path:" textAlignment="RIGHT" wrappingWidth="142.800048828125">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="File Path:" textAlignment="RIGHT" wrappingWidth="162.0">
                      <HBox.margin>
-                        <Insets left="50.0" right="15.0" />
+                        <Insets left="40.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
@@ -75,16 +75,16 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category: " textAlignment="RIGHT" wrappingWidth="143.60003662109375">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category: " textAlignment="RIGHT" wrappingWidth="162.0">
                      <HBox.margin>
-                        <Insets left="50.0" right="15.0" />
+                        <Insets left="40.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
                   <ComboBox fx:id="comboBox" opacity="0.9" prefHeight="26.0" prefWidth="175.0" />
-                  <Button mnemonicParsing="false" onAction="#onLoadMoreClick" prefHeight="26.0" prefWidth="66.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Add">
+                  <Button mnemonicParsing="false" onAction="#onAddCategoryClick" prefHeight="26.0" prefWidth="66.0" styleClass="btnChoose" stylesheets="@views/Style.css" text="Add">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -107,9 +107,9 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="175.0" prefHeight="76.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category: " textAlignment="RIGHT" wrappingWidth="143.60003662109375">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Categories: " textAlignment="RIGHT" wrappingWidth="162.0">
                      <HBox.margin>
-                        <Insets left="50.0" right="15.0" />
+                        <Insets left="40.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
@@ -131,16 +131,16 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IMDB Rating: " textAlignment="RIGHT" wrappingWidth="141.99993896484375">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IMDB Rating: " textAlignment="RIGHT" wrappingWidth="162.0">
                      <HBox.margin>
-                        <Insets left="50.0" right="15.0" />
+                        <Insets left="40.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <Slider fx:id="IMDBGradeSlider" blockIncrement="1.0" majorTickUnit="0.5" max="10.0" prefHeight="14.0" prefWidth="178.0" showTickLabels="true" showTickMarks="true" value="5.0" />
-                  <Label fx:id="IMDBScore" contentDisplay="CENTER" prefHeight="31.0" prefWidth="52.0" text="5.0">
+                  <Slider fx:id="IMDBGradeSlider" blockIncrement="1.0" majorTickUnit="0.5" max="10.0" prefHeight="14.0" prefWidth="178.0" showTickLabels="true" showTickMarks="true" stylesheets="@views/Style.css" value="5.0" />
+                  <Label id="IMDBScore" fx:id="IMDBScore" contentDisplay="CENTER" prefHeight="31.0" prefWidth="52.0" stylesheets="@views/Style.css" text="5.0">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
@@ -156,16 +156,16 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="236.0" prefHeight="45.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Rating: " textAlignment="RIGHT" wrappingWidth="141.99993896484375">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Rating: " textAlignment="RIGHT" wrappingWidth="162.0">
                      <HBox.margin>
-                        <Insets left="50.0" right="15.0" />
+                        <Insets left="40.0" right="15.0" />
                      </HBox.margin>
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
                   <Slider fx:id="PersonalGradeSlider" blockIncrement="1.0" majorTickUnit="0.5" max="10.0" prefHeight="14.0" prefWidth="178.0" showTickLabels="true" showTickMarks="true" value="5.0" />
-                  <Label fx:id="PersonalScore" prefHeight="31.0" prefWidth="50.0" text="5.0">
+                  <Label id="PersonalScore" fx:id="PersonalScore" prefHeight="31.0" prefWidth="50.0" stylesheets="@views/Style.css" text="5.0">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>

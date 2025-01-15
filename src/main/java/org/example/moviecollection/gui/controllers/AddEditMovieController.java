@@ -9,6 +9,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.gui.model.MovieModel;
 
@@ -51,6 +52,9 @@ public class AddEditMovieController implements Initializable{
 
     public void initialize(URL location, ResourceBundle resources) {
         displayCategoryName();
+        // Bind labels directly to the slider values with formatting
+        IMDBScore.textProperty().bind(IMDBGradeSlider.valueProperty().asString("%.1f"));
+        PersonalScore.textProperty().bind(PersonalGradeSlider.valueProperty().asString("%.1f"));
     }
 
     public void displayCategoryName() {
@@ -74,24 +78,34 @@ public class AddEditMovieController implements Initializable{
     }
 
     public void onSaveMovieClick(ActionEvent actionEvent) {
-        /*try{
-            if(txtName.getText().isEmpty() || txtFilePath.getText().isEmpty()){
+        try{
+            if(txtName.getText().isEmpty() || txtFilePath.getText().isEmpty() || lstCategory.getItems().isEmpty()){
                 movieCollectionApplicationController.showAlert("Validation Error", "All fields must be filled!");
                 return;
             }
-
             String movieName = txtName.getText();
-            Double imdbRating = Double.parseDouble(txtFilePath.getText());
-            Double personalRating = Double.parseDouble(comboBox.getValue());
             String moviePath = txtFilePath.getText();
+            Double imdbRating = IMDBGradeSlider.getValue();
+            Double personalRating = PersonalGradeSlider.getValue();
+            ObservableList<String> selectedCategories = lstCategory.getItems();// Get the selected categories from the ListView
 
-
-            Movie newMovie = new Movie(movieName, imdbRating, personalRating, moviePath);
-            movieModel.addMovie(newMovie);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
-
+            if(movieToEdit != null){
+                movieToEdit.setName(movieName);
+                movieToEdit.setFilePath(moviePath);
+                movieToEdit.setImdbRating(imdbRating);
+                movieToEdit.setPersonalRating(personalRating);
+                movieModel.updateMovie(movieToEdit);
+            }else{
+                Movie newMovie = new Movie(movieName, imdbRating, personalRating, moviePath, selectedCategories);
+                movieModel.addMovie(newMovie);
+            }
+            movieCollectionApplicationController.loadMoviesFromDatabase();
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
+        catch (Exception e) {
+            movieCollectionApplicationController.showAlert("Error", "An error occurred while saving the movie: " + e.getMessage());
+        }
     }
 
     public void setMovieToEdit(Movie selectedMovie){
@@ -133,6 +147,35 @@ public class AddEditMovieController implements Initializable{
         });
     }
 
-    public void onRemoveClick(ActionEvent actionEvent) {
+    public void onAddCategoryClick(ActionEvent actionEvent) {
+        String selectedCategory = comboBox.getSelectionModel().getSelectedItem();// Get the selected category from the ComboBox
+        if (selectedCategory != null) {
+            // Get the items of the ListView
+            ObservableList<String> currentCategories = lstCategory.getItems();
+            // Check if the category already exists in the ListView
+            if (!currentCategories.contains(selectedCategory)) {
+                // Add the selected category to the ListView
+                currentCategories.add(selectedCategory);
+            } else {
+                // Show an alert if the category already exists
+                movieCollectionApplicationController.showAlert("Information","This category already exists in the selected categories");
+            }
+        } else {
+            // Show an alert if no category is selected in the ComboBox
+            movieCollectionApplicationController.showAlert("Warning","Please select a category from the dropdown list.");
+        }
     }
+
+    public void onRemoveClick(ActionEvent actionEvent) {
+        // Get the selected category from the ListView
+        String selectedCategory = (String) lstCategory.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null) {
+            // Remove the selected category from the ListView
+            lstCategory.getItems().remove(selectedCategory);
+        } else {
+            // Show an alert if no category is selected in the ListView
+            movieCollectionApplicationController.showAlert("Warning","Please select a category to remove.");
+        }
+    }
+
 }

@@ -49,6 +49,12 @@ public class MovieDAODB implements IMovieDAO {
             ps.setDouble(2, movie.getImdbRating());
             ps.setDouble(3, movie.getPersonalRating());
             ps.setString(4, movie.getFilePath());
+            if (movie.getLastView() != null) {
+                ps.setDate(5, new java.sql.Date(movie.getLastView().getTime()));
+            } else {
+                ps.setNull(5, java.sql.Types.DATE);
+            }
+
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new IOException("Error adding movie to database: " + e.getMessage(), e);
