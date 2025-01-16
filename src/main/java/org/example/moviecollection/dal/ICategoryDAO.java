@@ -10,4 +10,6 @@ public interface ICategoryDAO {
     void deleteCategory(String name) throws IOException;
     void addCategory(Category category) throws IOException;
     void updateCategory(Category category) throws IOException;
+
+    boolean isCategoryExists(String categoryName) throws IOException;
 }

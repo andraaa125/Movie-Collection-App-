@@ -36,6 +36,12 @@ public class AddEditCategoryController {
                 movieCollectionApplicationController.showAlert("Error", "Category name cannot be empty!");
                 return;
             }
+            // Check if the category already exists
+            if (movieModel.isCategoryExists(newCategoryName)) {
+                movieCollectionApplicationController.showAlert("Error", "Category already exists!");
+                return;
+            }
+
             if (categoryToEdit != null) {
                 categoryToEdit.setName(newCategoryName);
                 movieModel.updateCategory(categoryToEdit);
@@ -45,68 +51,16 @@ public class AddEditCategoryController {
                 movieModel.addCategory(newCategory);
                 System.out.println("New category added: " + newCategoryName);
             }
+
             movieCollectionApplicationController.loadCategoriesFromDatabase();
             ((javafx.stage.Stage) txtAddEditCategory.getScene().getWindow()).close();
 
         } catch (Exception e) {
-            if (e.getMessage().contains("Duplicate entry")) {
-                movieCollectionApplicationController.showAlert("Error", "Category already exists!");
-            } else {
-                movieCollectionApplicationController.showAlert("Error", "An error occurred: " + e.getMessage());
-                System.err.println("Error during category save: " + e.getMessage());
-                e.printStackTrace();
-            }
+            movieCollectionApplicationController.showAlert("Error", "An error occurred: " + e.getMessage());
+            System.err.println("Error during category save: " + e.getMessage());
+            e.printStackTrace();
+        }
         }
 
-    /*public void onSaveCategoryClick(ActionEvent actionEvent) {
-        // Get the category name from the input field
-        String categoryName = txtAddEditCategory.getText().trim();
-
-        if (categoryName == null || categoryName.isEmpty()) {
-            showAlert("Error", "Category name cannot be empty!");
-            return;
-        }
-
-        // Sanitize category name (optional for safety)
-        String sanitizedCategoryName = categoryName.replaceAll("[^a-zA-Z0-9_ ]", "_");
-
-        // SQL query to insert the category name into the Category table
-        String insertCategorySQL = "INSERT INTO Category (name) VALUES (?)";
-
-        try (Connection con = dbc.getConnection();
-             PreparedStatement stmt = con.prepareStatement(insertCategorySQL)) {
-
-            // Set the category name parameter
-            stmt.setString(1, sanitizedCategoryName);
-
-            // Execute the query
-            stmt.executeUpdate();
-
-            // Notify the user of success
-            showAlert("Success", "Category '" + categoryName + "' added successfully!");
-
-            // Refresh the ListView in the main controller
-            if (movieCollectionApplicationController != null) {
-                movieCollectionApplicationController.loadCategoriesFromDatabase();
-            }
-
-            // Close the category creation window
-            ((javafx.stage.Stage) txtAddEditCategory.getScene().getWindow()).close();
-
-        } catch (SQLIntegrityConstraintViolationException e) {
-            showAlert("Error", "Category '" + categoryName + "' already exists!");
-        } catch (Exception e) {
-            showAlert("Error", "Failed to add category: " + e.getMessage());
-        }
-    }*/
-
-/*
-    public void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null); // Optional: You can provide a header if needed
-        alert.setContentText(message);
-        alert.showAndWait();
-    }*/
     }
-}
+

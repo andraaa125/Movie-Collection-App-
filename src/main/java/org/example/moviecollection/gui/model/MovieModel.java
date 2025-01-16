@@ -95,4 +95,8 @@ public class MovieModel {
         }
         return searchedMovies;
     }
+
+    public boolean isCategoryExists(String categoryName) throws IOException {
+        return categoryManager.isCategoryExists(categoryName); // Assuming `categoryManager` is an instance of `CategoryManager`
+    }
 }

@@ -78,7 +78,23 @@ public class CategoryDAODB implements ICategoryDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean isCategoryExists(String categoryName) throws IOException {
+        try (Connection connection = con.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM Category WHERE name = ?")) {
+            ps.setString(1, categoryName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // If count > 0, the category exists
+            }
+        } catch (SQLException e) {
+            throw new IOException("Error checking if category exists: " + e.getMessage(), e);
+        }
+        return false;
     }
+
+}
 
 
 

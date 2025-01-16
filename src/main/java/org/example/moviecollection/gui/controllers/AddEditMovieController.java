@@ -64,13 +64,10 @@ public class AddEditMovieController implements Initializable{
         if (movieCategories == null) {
             movieCategories = FXCollections.observableArrayList(); // Initialize as an empty list if null
         }
-
         System.out.println("Categories: " + movieCategories);
-
         selectedCategories.clear(); // Clear any existing categories
         selectedCategories.addAll(movieCategories); // Add the movie's categories to the selectedCategories list
         lstCategory.setItems(selectedCategories); // Update the ListView with the selected categories
-
         IMDBGradeSlider.setValue(movieToEdit.getImdbRating());
         PersonalGradeSlider.setValue(movieToEdit.getPersonalRating());
     }
@@ -96,8 +93,8 @@ public class AddEditMovieController implements Initializable{
     }
 
     public void onSaveMovieClick(ActionEvent actionEvent) {
-        try{
-            if(txtName.getText().isEmpty() || txtFilePath.getText().isEmpty() || lstCategory.getItems().isEmpty()){
+        try {
+            if (txtName.getText().isEmpty() || txtFilePath.getText().isEmpty() || lstCategory.getItems().isEmpty()) {
                 movieCollectionApplicationController.showAlert("Validation Error", "All fields must be filled!");
                 return;
             }
@@ -107,14 +104,14 @@ public class AddEditMovieController implements Initializable{
             Double newPersonalRating = PersonalGradeSlider.getValue();
             ObservableList<String> selectedCategories = lstCategory.getItems();// Get the selected categories from the ListView
 
-            if(movieToEdit != null){
+            if (movieToEdit != null) {
                 movieToEdit.setName(newMovieName);
                 movieToEdit.setFilePath(newMoviePath);
                 movieToEdit.setImdbRating(newImdbRating);
                 movieToEdit.setPersonalRating(newPersonalRating);
                 movieModel.updateMovie(movieToEdit);
                 System.out.println("Movie updated");
-            }else{
+            } else {
                 Movie newMovie = new Movie(newMovieName, newImdbRating, newPersonalRating, newMoviePath, selectedCategories);
                 movieModel.addMovie(newMovie);
                 System.out.println("Movie added");
@@ -122,9 +119,14 @@ public class AddEditMovieController implements Initializable{
             movieCollectionApplicationController.loadMoviesFromDatabase();
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             stage.close();
-        }
-        catch (Exception e) {
-            movieCollectionApplicationController.showAlert("Error", "An error occurred while saving the movie: " + e.getMessage());
+        } catch (Exception e) {
+            if (e.getMessage().contains("Duplicate entry")) {
+                movieCollectionApplicationController.showAlert("Error", "Movie already exists!");
+            } else {
+                movieCollectionApplicationController.showAlert("Error", "An error occurred: " + e.getMessage());
+                System.err.println("Error during movie save: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 

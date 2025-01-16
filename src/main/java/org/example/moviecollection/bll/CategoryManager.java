@@ -34,4 +34,8 @@ public class CategoryManager {
         categoryDAO.updateCategory(category);
     }
 
+    public boolean isCategoryExists(String categoryName) throws IOException {
+        return categoryDAO.isCategoryExists(categoryName);
+    }
+
 }
