@@ -48,4 +48,13 @@ public class CatMovie {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "CatMovie{" +
+                "id=" + id +
+                ", categoryId=" + categoryID +
+                ", movieId=" + movieID +
+                '}';
+    }
 }

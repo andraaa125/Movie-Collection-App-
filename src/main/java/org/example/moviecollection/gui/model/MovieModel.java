@@ -68,8 +68,8 @@ public class MovieModel {
         movieManager.deleteMovie(name);
     }
 
-    public void updateMovie(Movie movie) throws IOException {
-        movieManager.updateMovie(movie);
+    public void updateMovie(Movie movieToEdit) throws IOException {
+        movieManager.updateMovie(movieToEdit);
     }
 
     public ObservableList<String> displayCategoryName() throws IOException {

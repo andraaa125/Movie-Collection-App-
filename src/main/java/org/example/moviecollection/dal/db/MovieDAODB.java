@@ -75,105 +75,27 @@ public class MovieDAODB implements IMovieDAO {
     }
 
     @Override
-    public void updateMovie(Movie movie) throws IOException{
-        String sql = "UPDATE Movie SET name = ?, personal_rating = ?, file_path = ?, last_viewed = ? WHERE name = ? AND imdb_rating = ? AND personal_rating = ?";
+    public void updateMovie(Movie movie) throws IOException {
+        String sql = "UPDATE Movie SET name = ?, imdb_rating = ?, personal_rating = ?, file_path = ?, last_viewed = ? WHERE id = ?";
         try (Connection connection = con.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-             ps.setString(1, movie.getName());
-             ps.setDouble(2, movie.getImdbRating());
-             ps.setDouble(3, movie.getPersonalRating());
-             ps.setString(4, movie.getFilePath());
-             //ps.setDate(5,movie.getLastView());                     );
-        } catch (SQLException e) {
-            throw new RuntimeException("Error deleting movie and its dependencies: " + e.getMessage(), e);
-        }
-    }
-
-
-
-    //This method checks if a movie exists in the database
-    /*private boolean movieExists(Movie movie) throws SQLException {
-        String sql = "SELECT * FROM Movies WHERE name=?";
-        try (Connection connection = dbConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, movie.getName());
-
-            try (ResultSet resultSet = stmt.executeQuery()) {
-                return resultSet.next(); // Returns true if the movie exists
-            }
-        }
-    }
-
-    //This method adds movies to the database (avoiding duplicates... hopefully)
-    public void addMovies(List<Movie> movieList) throws SQLException {
-        String sql = "INSERT INTO Movie (name, imdb_Rating, personal_rating, file_path, last_viewed) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = dbConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-
-            for (Movie movie : movieList) {
-
-                //Check if the movie exists before inserting
-                if (!movieExists(movie)) {
-                    stmt.setString(1, movie.getName());
-                    stmt.setDouble(2, movie.getImdbRating());
-                    stmt.setDouble(3, movie.getPersonalRating());
-                    stmt.setString(4, movie.getFilePath());
-                    stmt.addBatch();
-                } else {
-                    System.out.println("The Movie already exists " + movie.getName());
-                }
-            }
-            int[] result = stmt.executeBatch(); // Execute all insertions at once
-            System.out.println("Movies were saved to the database successfully!");
-
-            //Check if the movies were inserted
-            int successCount = 0;
-            for (int res : result) {
-                if (res == PreparedStatement.SUCCESS_NO_INFO || res > 0) {
-                    successCount++;
-                }
-            }
-            System.out.println(successCount + " movies were successfully added.");
-        } catch (SQLException e) {
-            throw e;
-        }
-    }
-
-    public boolean updateMovie(Movie updatedMovie, double originalRating) throws SQLException {
-        String sql = "UPDATE Movie SET name = ?, personal_rating = ?, file_path = ?, last_viewed = ? WHERE name = ? AND imdb_rating = ? AND personal_rating = ?";
-        try (Connection connection = dbConnection.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, updatedMovie.getName());
-            pstmt.setDouble(2, updatedMovie.getImdbRating());
-            pstmt.setDouble(3, updatedMovie.getPersonalRating());
-            pstmt.setString(4, updatedMovie.getFilePath());
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Movie updated successfully. " + updatedMovie.getName());
-                return true;
+            ps.setString(1, movie.getName());
+            ps.setDouble(2, movie.getImdbRating());
+            ps.setDouble(3, movie.getPersonalRating());
+            ps.setString(4, movie.getFilePath());
+            if (movie.getLastView() != null) {
+                ps.setDate(5, new java.sql.Date(movie.getLastView().getTime()));
             } else {
-                System.out.println("Failed to update movie " + updatedMovie.getName());
-                return false;
+                ps.setNull(5, java.sql.Types.DATE);
             }
+            ps.setInt(6, movie.getId());
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new IOException("No movie found with the given ID to update.");
+            }
+        } catch (SQLException e) {
+            throw new IOException("Error updating movie in the database: " + e.getMessage(), e);
         }
     }
-
-    public boolean deleteMovie(String name) throws SQLException {
-        String sql = "DELETE FROM Movie WHERE name = ?";
-        try (Connection connection = dbConnection.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Movie deleted successfully. " + name);
-                return true;
-            } else {
-                System.out.println("Failed to delete movie " + name);
-                return false;
-            }
-        }
-    }*/
 
 }

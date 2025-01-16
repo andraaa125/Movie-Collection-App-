@@ -101,21 +101,23 @@ public class AddEditMovieController implements Initializable{
                 movieCollectionApplicationController.showAlert("Validation Error", "All fields must be filled!");
                 return;
             }
-            String movieName = txtName.getText();
-            String moviePath = txtFilePath.getText();
-            Double imdbRating = IMDBGradeSlider.getValue();
-            Double personalRating = PersonalGradeSlider.getValue();
+            String newMovieName = txtName.getText();
+            String newMoviePath = txtFilePath.getText();
+            Double newImdbRating = IMDBGradeSlider.getValue();
+            Double newPersonalRating = PersonalGradeSlider.getValue();
             ObservableList<String> selectedCategories = lstCategory.getItems();// Get the selected categories from the ListView
 
             if(movieToEdit != null){
-                movieToEdit.setName(movieName);
-                movieToEdit.setFilePath(moviePath);
-                movieToEdit.setImdbRating(imdbRating);
-                movieToEdit.setPersonalRating(personalRating);
+                movieToEdit.setName(newMovieName);
+                movieToEdit.setFilePath(newMoviePath);
+                movieToEdit.setImdbRating(newImdbRating);
+                movieToEdit.setPersonalRating(newPersonalRating);
                 movieModel.updateMovie(movieToEdit);
+                System.out.println("Movie updated");
             }else{
-                Movie newMovie = new Movie(movieName, imdbRating, personalRating, moviePath, selectedCategories);
+                Movie newMovie = new Movie(newMovieName, newImdbRating, newPersonalRating, newMoviePath, selectedCategories);
                 movieModel.addMovie(newMovie);
+                System.out.println("Movie added");
             }
             movieCollectionApplicationController.loadMoviesFromDatabase();
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
