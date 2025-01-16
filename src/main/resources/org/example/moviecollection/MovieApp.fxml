@@ -16,7 +16,7 @@
    <children>
       <HBox layoutY="-1.0" prefHeight="67.0" prefWidth="926.0" styleClass="header" stylesheets="@views/Style.css" />
       <ListView fx:id="listViewCategories" layoutX="33.0" layoutY="153.0" opacity="0.9" prefHeight="410.0" prefWidth="220.0" />
-      <TextField layoutX="624.0" layoutY="17.0" opacity="0.9" prefHeight="35.0" prefWidth="220.0" />
+      <TextField fx:id="txtQuery" layoutX="624.0" layoutY="17.0" opacity="0.9" prefHeight="35.0" prefWidth="220.0" />
       <Button layoutX="853.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="35.0" prefWidth="35.0" styleClass="btnSearch">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -102,6 +102,11 @@
                </image>
             </ImageView>
          </graphic>
+      </Button>
+      <Button fx:id="btnReset" layoutX="540.0" layoutY="17.0" mnemonicParsing="false" onAction="#onResetClick" prefHeight="35.0" prefWidth="73.0" styleClass="btnSearch" text="Reset">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
       </Button>
    </children>
 </AnchorPane>

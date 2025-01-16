@@ -17,6 +17,8 @@ public class MovieModel {
     private final MovieManager movieManager = new MovieManager();
     private final ObservableList<Category> categories = FXCollections.observableArrayList();
     private final ObservableList<Movie> movies = FXCollections.observableArrayList();
+    private final ObservableList<Movie> searchedMovies = FXCollections.observableArrayList();
+
 
     public ObservableList<Category> getAllCategories() {
         try {
@@ -83,5 +85,14 @@ public class MovieModel {
         return FXCollections.observableArrayList(categorySet);
     }
 
-
+    // Get observableList of searched movies.
+    public ObservableList<Movie> getSearchedMovies(String query) {
+        try {
+            List<Movie> searchResult = movieManager.searchMovie(query);
+            searchedMovies.setAll(searchResult); // Update observable list with filtered songs
+        } catch (IOException e) {
+            System.out.println("Error searching movies: " + e.getMessage());
+        }
+        return searchedMovies;
+    }
 }

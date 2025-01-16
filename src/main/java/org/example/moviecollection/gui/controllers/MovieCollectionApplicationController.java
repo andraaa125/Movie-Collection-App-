@@ -23,7 +23,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MovieCollectionApplicationController implements Initializable {
-
+    @FXML
+    private Button btnReset;
+    @FXML
+    private TextField txtQuery;
     @FXML
     private TableView lstMovie;
     @FXML
@@ -45,6 +48,7 @@ public class MovieCollectionApplicationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadCategoriesFromDatabase();
         loadMoviesFromDatabase();
+        btnReset.setDisable(true);
     }
 
     public void loadCategoriesFromDatabase() {
@@ -112,10 +116,6 @@ public class MovieCollectionApplicationController implements Initializable {
             // Show a warning if no song is selected
             showAlert("No Category Was Selected", "Please select a category to delete.");
         }
-    }
-
-    public void onSearchBtnClick(ActionEvent actionEvent) {
-
     }
 
     public void onPlayBtnClick(ActionEvent actionEvent) {
@@ -193,5 +193,32 @@ public class MovieCollectionApplicationController implements Initializable {
         }
     }
 
+    public void onSearchBtnClick(ActionEvent actionEvent) {
+        String query = txtQuery.getText().trim().toLowerCase(); // Get and trim the query text
+        // If query is empty, show a warning
+        if (query.isEmpty()) {
+            showAlert("Error", "Please input what you want to search!");
+            return;
+        }
+        try {
+            System.out.println("Searched movies in TableView: " + lstMovie.getItems()); // Log the items in the TableView
+            lstMovie.setItems(movieModel.getSearchedMovies(query));  // Update TableView with filtered songs
+            lstMovie.refresh();
+            btnReset.setText("Reset");
+            btnReset.setDisable(false);
+        }catch (Exception e) {
+            showAlert("Error", "An error occurred while searching the movie: .");
+        }
+    }
 
+
+    public void onResetClick(ActionEvent actionEvent) {
+        if (!btnReset.isDisable()) {
+            btnReset.setText("Search");
+            btnReset.setDisable(true);  // Disable the Clear button
+            txtQuery.clear();
+            lstMovie.refresh();
+            lstMovie.setItems(movieModel.getAllMovies());
+        }
+    }
 }
