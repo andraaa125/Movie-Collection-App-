@@ -43,7 +43,6 @@
             <TableColumn fx:id="LastViewColumn" minWidth="3.99993896484375" prefWidth="160.80001220703127" text="Last View" />
         </columns>
       </TableView>
-      <Button layoutX="857.0" layoutY="573.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="43.0" prefWidth="36.0" styleClass="btnEdit" />
       <Button layoutX="171.0" layoutY="113.0" mnemonicParsing="false" onAction="#onEditCategoryClick" prefHeight="28.0" prefWidth="15.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -89,11 +88,14 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="35.0" fitWidth="37.0" layoutX="857.0" layoutY="577.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@views/pictures/icons8-play-pause-24.png" />
-         </image>
-      </ImageView>
+      <Button layoutX="345.0" layoutY="105.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="28.0" prefWidth="51.0" styleClass="btnEdit">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@views/pictures/icons8-play-64.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Button layoutX="125.0" layoutY="113.0" mnemonicParsing="false" onAction="#onAddCategoryClick" prefHeight="28.0" prefWidth="26.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

@@ -8,7 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import org.example.moviecollection.MovieCollectionApplication;
 import org.example.moviecollection.be.Category;
@@ -16,6 +20,8 @@ import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.bll.FilterService;
 import org.example.moviecollection.gui.model.MovieModel;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -49,6 +55,37 @@ public class MovieCollectionApplicationController implements Initializable {
         loadCategoriesFromDatabase();
         loadMoviesFromDatabase();
         btnReset.setDisable(true);
+    }
+
+    public void onPlayBtnClick(ActionEvent actionEvent) {
+        // Get the selected movie
+        Movie selectedMovie = (Movie) lstMovie.getSelectionModel().getSelectedItem();
+
+        if (selectedMovie != null) {
+            String filePath = selectedMovie.getFilePath();
+
+            // Check if the file path is valid
+            if (filePath != null && !filePath.isEmpty()) {
+                File movieFile = new File(filePath);
+                if (movieFile.exists()) {
+                    try {
+                        // Open the file with the system's default application
+                        Desktop.getDesktop().open(movieFile);
+
+                    } catch (IOException e) {
+                        showAlert("Error opening movie", "Unable to play the movie file.");
+                        e.printStackTrace();
+                    }
+                } else {
+                    showAlert("File not found", "The movie file does not exist at the specified path.");
+                }
+            } else {
+                showAlert("Invalid file path", "The selected movie does not have a valid file path.");
+            }
+        } else {
+            showAlert("No movie selected", "Please select a movie to play.");
+        }
+
     }
 
     public void loadCategoriesFromDatabase() {
@@ -116,10 +153,6 @@ public class MovieCollectionApplicationController implements Initializable {
             // Show a warning if no song is selected
             showAlert("No Category Was Selected", "Please select a category to delete.");
         }
-    }
-
-    public void onPlayBtnClick(ActionEvent actionEvent) {
-
     }
 
     public void showAlert(String title, String message) {
