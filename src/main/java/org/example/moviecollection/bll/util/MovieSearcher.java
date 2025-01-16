@@ -22,9 +22,11 @@ public class MovieSearcher {
     private boolean compareToMovieName(String query, Movie movie){
         return movie.getName().toLowerCase().contains(query.toLowerCase());
     }
+
     private boolean compareToMovieCategory(String query, Movie movie){
         return movie.toString().toLowerCase().contains(query.toLowerCase());
     }
+
     private boolean compareToIMDBRating(String query, Movie movie) {
         try {
             // Parse the query as a double to compare with the IMDb rating

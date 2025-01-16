@@ -3,6 +3,7 @@ package org.example.moviecollection.be;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,10 +13,10 @@ public class Movie {
     private double imdbRating;
     private double personalRating;
     private String filePath;
-    private Date lastView;
+    private LocalDate lastView;
     private ObservableList<String> categories;
 
-    public Movie(int id, String name, double imdbRating, double personalRating, String filePath, Date lastView) {
+    public Movie(int id, String name, double imdbRating, double personalRating, String filePath, LocalDate lastView) {
         this.id = id;
         this.name = name;
         this.imdbRating = imdbRating;
@@ -40,11 +41,11 @@ public class Movie {
     }
 
     // Getter and setter for lastViewDate
-    public Date getLastView() {
+    public LocalDate getLastView() {
         return lastView;
     }
 
-    public void setLastViewDate(Date lastView) {
+    public void setLastViewDate(LocalDate lastView) {
         this.lastView = lastView;
     }
 
