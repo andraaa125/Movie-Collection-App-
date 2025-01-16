@@ -37,11 +37,10 @@
          </font></Label>
       <TableView fx:id="lstMovie" layoutX="283.0" layoutY="153.0" opacity="0.9" prefHeight="410.0" prefWidth="609.0">
         <columns>
-          <TableColumn fx:id="IdColumn" prefWidth="51.20001220703125" text="ID" />
           <TableColumn fx:id="NameColumn" prefWidth="192.0" text="Name" />
             <TableColumn fx:id="IMDbRatingColumn" minWidth="8.0" prefWidth="118.39990234375" text="IMDB Rating" />
-            <TableColumn fx:id="MyRatingColumn" prefWidth="108.800048828125" text="My Rating" />
-            <TableColumn fx:id="LastViewColumn" minWidth="8.0" prefWidth="136.80001220703127" text="Last View" />
+            <TableColumn fx:id="MyRatingColumn" prefWidth="137.59991455078125" text="My Rating" />
+            <TableColumn fx:id="LastViewColumn" minWidth="3.99993896484375" prefWidth="160.80001220703127" text="Last View" />
         </columns>
       </TableView>
       <Button layoutX="857.0" layoutY="573.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="43.0" prefWidth="36.0" styleClass="btnEdit" />

@@ -1,22 +1,19 @@
 package org.example.moviecollection.gui.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.gui.model.MovieModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -45,6 +42,7 @@ public class AddEditMovieController implements Initializable{
     private MovieCollectionApplicationController movieCollectionApplicationController;
     private final MovieModel movieModel = new MovieModel();
     private Movie movieToEdit;
+    private ObservableList<String> selectedCategories = FXCollections.observableArrayList();
 
     public void setParentController(MovieCollectionApplicationController movieCollectionApplicationController) {
         this.movieCollectionApplicationController = movieCollectionApplicationController;
@@ -55,6 +53,26 @@ public class AddEditMovieController implements Initializable{
         // Bind labels directly to the slider values with formatting
         IMDBScore.textProperty().bind(IMDBGradeSlider.valueProperty().asString("%.1f"));
         PersonalScore.textProperty().bind(PersonalGradeSlider.valueProperty().asString("%.1f"));
+    }
+
+    public void setMovieToEdit(Movie movieToEdit) throws IOException {
+        this.movieToEdit = movieToEdit;
+        txtName.setText(movieToEdit.getName());
+        txtFilePath.setText(movieToEdit.getFilePath());
+
+        ObservableList<String> movieCategories = movieToEdit.getCategories();
+        if (movieCategories == null) {
+            movieCategories = FXCollections.observableArrayList(); // Initialize as an empty list if null
+        }
+
+        System.out.println("Categories: " + movieCategories);
+
+        selectedCategories.clear(); // Clear any existing categories
+        selectedCategories.addAll(movieCategories); // Add the movie's categories to the selectedCategories list
+        lstCategory.setItems(selectedCategories); // Update the ListView with the selected categories
+
+        IMDBGradeSlider.setValue(movieToEdit.getImdbRating());
+        PersonalGradeSlider.setValue(movieToEdit.getPersonalRating());
     }
 
     public void displayCategoryName() {
@@ -108,10 +126,6 @@ public class AddEditMovieController implements Initializable{
         }
     }
 
-    public void setMovieToEdit(Movie selectedMovie){
-
-    }
-
     public void onChooseClick(ActionEvent actionEvent) {// Open a file chooser dialog to select a song file
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Please select a Movie File"); // Set the title of the file chooser window
@@ -150,15 +164,12 @@ public class AddEditMovieController implements Initializable{
     public void onAddCategoryClick(ActionEvent actionEvent) {
         String selectedCategory = comboBox.getSelectionModel().getSelectedItem();// Get the selected category from the ComboBox
         if (selectedCategory != null) {
-            // Get the items of the ListView
-            ObservableList<String> currentCategories = lstCategory.getItems();
-            // Check if the category already exists in the ListView
-            if (!currentCategories.contains(selectedCategory)) {
-                // Add the selected category to the ListView
-                currentCategories.add(selectedCategory);
+            // Add the selected category to the selectedCategories ObservableList
+            if (!selectedCategories.contains(selectedCategory)) {
+                selectedCategories.add(selectedCategory);
+                lstCategory.setItems(selectedCategories); // Refresh ListView with updated list
             } else {
-                // Show an alert if the category already exists
-                movieCollectionApplicationController.showAlert("Information","This category already exists in the selected categories");
+                movieCollectionApplicationController.showAlert("Information", "This category already exists in the selected categories.");
             }
         } else {
             // Show an alert if no category is selected in the ComboBox
@@ -167,14 +178,12 @@ public class AddEditMovieController implements Initializable{
     }
 
     public void onRemoveClick(ActionEvent actionEvent) {
-        // Get the selected category from the ListView
         String selectedCategory = (String) lstCategory.getSelectionModel().getSelectedItem();
         if (selectedCategory != null) {
-            // Remove the selected category from the ListView
-            lstCategory.getItems().remove(selectedCategory);
+            selectedCategories.remove(selectedCategory); // Remove from the ObservableList
+            lstCategory.setItems(selectedCategories); // Refresh ListView
         } else {
-            // Show an alert if no category is selected in the ListView
-            movieCollectionApplicationController.showAlert("Warning","Please select a category to remove.");
+            movieCollectionApplicationController.showAlert("Warning", "Please select a category to remove.");
         }
     }
 

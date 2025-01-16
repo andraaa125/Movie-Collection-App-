@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MovieCollectionApplicationController implements Initializable {
-    @FXML
-    private TableColumn IdColumn;
+
     @FXML
     private TableView lstMovie;
     @FXML
@@ -56,7 +55,6 @@ public class MovieCollectionApplicationController implements Initializable {
     public void loadMoviesFromDatabase() {
         lstMovie.getItems().clear();
         lstMovie.setItems(movieModel.getAllMovies());
-        IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         IMDbRatingColumn.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         MyRatingColumn.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
@@ -161,6 +159,7 @@ public class MovieCollectionApplicationController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         AddEditMovieController movieController = fxmlLoader.getController();
         movieController.setParentController(this);
+        movieController.setMovieToEdit(selectedMovie);
         Stage stage = new Stage();
         stage.setTitle("Edit Movie");
         stage.setScene(scene);
