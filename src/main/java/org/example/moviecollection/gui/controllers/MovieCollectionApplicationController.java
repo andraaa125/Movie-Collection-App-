@@ -46,16 +46,41 @@ public class MovieCollectionApplicationController implements Initializable {
     @FXML
     private ListView listViewCategories;
 
-    private final MovieModel movieModel = new MovieModel();
+    private static final MovieModel movieModel = new MovieModel();
     private final FilterService filterService = new FilterService();
     private boolean isFilterActive = false; // Track the current state of the button
+    private boolean moviesToWarn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadCategoriesFromDatabase();
         loadMoviesFromDatabase();
         btnReset.setDisable(true);
+        Platform.runLater(this::checkMoviesToDelete);
     }
+
+    private void checkMoviesToDelete() {
+        // Get the list of movies to warn about
+        List<Movie> moviesToWarn = movieModel.getFilterMoviesToDelete();
+        if (!moviesToWarn.isEmpty()) {
+            // Build the warning message
+            StringBuilder warningMessage = new StringBuilder();
+            warningMessage.append("You have movies that should be reviewed, as they have a personal rating below 6 and have not been viewed in over 2 years.\n\n");
+            for (Movie movie : moviesToWarn) {
+                warningMessage.append(movie.getName()).append("\n");
+            }
+
+            // Show the warning dialog
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning: Movies to Review");
+            alert.setHeaderText("Attention: Movies need review");
+            alert.setContentText(warningMessage.toString());
+            alert.showAndWait();
+        }
+    }
+
+
+
 
     public void onPlayBtnClick(ActionEvent actionEvent) {
         // Get the selected movie
@@ -71,6 +96,10 @@ public class MovieCollectionApplicationController implements Initializable {
                     try {
                         // Open the file with the system's default application
                         Desktop.getDesktop().open(movieFile);
+
+                        // Update the last view in the database
+                        movieModel.updateLastView(selectedMovie.getId());
+                        loadMoviesFromDatabase(); // Refresh the table to show updated data
 
                     } catch (IOException e) {
                         showAlert("Error opening movie", "Unable to play the movie file.");

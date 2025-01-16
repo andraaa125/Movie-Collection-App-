@@ -18,6 +18,7 @@ public class MovieModel {
     private final ObservableList<Category> categories = FXCollections.observableArrayList();
     private final ObservableList<Movie> movies = FXCollections.observableArrayList();
     private final ObservableList<Movie> searchedMovies = FXCollections.observableArrayList();
+    private final ObservableList<Movie> shouldDeleteMovies = FXCollections.observableArrayList();
 
 
     public ObservableList<Category> getAllCategories() {
@@ -96,7 +97,31 @@ public class MovieModel {
         return searchedMovies;
     }
 
+    // Get observableList of movies to delete.
+    public ObservableList<Movie> getFilterMoviesToDelete() {
+        try {
+            List<Movie> filterResult = movieManager.moviesToDelete(); // Call the moviesToDelete method
+            shouldDeleteMovies.setAll(filterResult); // Update observable list with filtered movies
+        } catch (IOException e) {
+            System.out.println("Error filtering movies to delete: " + e.getMessage());
+        }
+        return shouldDeleteMovies;
+    }
+
+
+
     public boolean isCategoryExists(String categoryName) throws IOException {
         return categoryManager.isCategoryExists(categoryName); // Assuming `categoryManager` is an instance of `CategoryManager`
     }
+
+    public void updateLastView(int movieId) throws IOException {
+        movieManager.updateLastView(movieId);
+    }
+
+    /*public List<String> checkMovieForWarning() {
+        return movieManager.checkMovieForWarning();
+    }*/
+
+
+
 }

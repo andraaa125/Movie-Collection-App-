@@ -99,15 +99,13 @@ public class MovieDAODB implements IMovieDAO {
         }
     }
 
-    public void updateLastView(int movieId) throws IOException {
+    public void updateLastView(int movieId) {
         String sql = "UPDATE Movie SET last_viewed = ? WHERE id = ?";
         try (Connection connection = con.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
             // Use current date for last viewed
             LocalDate today = LocalDate.now();
             ps.setDate(1, java.sql.Date.valueOf(today)); // Convert LocalDate to SQL Date
-
             ps.setInt(2, movieId);
 
             int rowsUpdated = ps.executeUpdate();
@@ -115,8 +113,45 @@ public class MovieDAODB implements IMovieDAO {
                 throw new IOException("No movie found with the given ID to update the last view.");
             }
         } catch (SQLException e) {
-            throw new IOException("Error updating the last view in the database: " + e.getMessage(), e);
+            try {
+                throw new IOException("Error updating the last view in the database: " + e.getMessage(), e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-}
+    /*public List<String> checkMovieForWarning(){
+        String query = "SELECT title, last_opened, personal_rating FROM movies " +
+                "WHERE personal_rating < 6 " +
+                "AND last_opened < DATE_SUB(CURDATE(), INTERVAL 2 YEAR)";
+        try (Connection connection = con.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+             List<String> moviesToWarn = new ArrayList<>();
+
+             while (rs.next()) {
+                String name = rs.getString("name");
+                Date lastOpened = rs.getDate("last_opened");
+                int rating = rs.getInt("personal_rating");
+
+                moviesToWarn.add(String.format("%s (Last Opened: %s, Rating: %d)",
+                        name, lastOpened.toString(), rating));
+            }if (!moviesToWarn.isEmpty()) {
+                System.out.println("Warning! The following movies have a rating under 6 " +
+                        "and have not been opened in over 2 years:");
+                moviesToWarn.forEach(System.out::println);
+            } else {
+                System.out.println("No movies need to be reviewed.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+*/
+
+    }

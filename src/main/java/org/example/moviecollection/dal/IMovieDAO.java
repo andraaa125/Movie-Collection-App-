@@ -10,6 +10,8 @@ public interface IMovieDAO {
     void addMovie(Movie movie) throws IOException;
     void deleteMovie(String name) throws IOException;
     void updateMovie(Movie movie) throws IOException;
+
+    void updateLastView(int movieId);
 }
 
 
