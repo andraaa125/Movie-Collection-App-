@@ -4,6 +4,7 @@ import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.ICatMovieDAO;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class CatMovieDAODB implements ICatMovieDAO {
     private DBConnection con = new DBConnection();
 
     @Override
-    public List<CatMovie> getMoviesInCategory(int categoryId) throws IOException {
+    public List<CatMovie> getMoviesInCategory(int categoryId) throws MovieCollectionAppExceptions {
         List<CatMovie> catMovies = new ArrayList<>();
         try {
             Connection c = con.getConnection();
@@ -39,13 +40,13 @@ public class CatMovieDAODB implements ICatMovieDAO {
                 catMovies.add(new CatMovie(id, categoryId, movieId, movieName, category)); // Adjust CatMovie constructor if necessary
             }
         } catch (SQLException e) {
-            throw new IOException("SQL Error fetching movies for category: " + e.getMessage());
+            throw new MovieCollectionAppExceptions("SQL Error fetching movies for category: " + e.getMessage());
         }
         return catMovies;
     }
 
     @Override
-    public List<CatMovie> getCategoriesPerMovie(int movieId) throws IOException {
+    public List<CatMovie> getCategoriesPerMovie(int movieId) throws MovieCollectionAppExceptions {
         List<CatMovie> catMovies = new ArrayList<>();
         try {
             Connection c = con.getConnection();
@@ -68,13 +69,13 @@ public class CatMovieDAODB implements ICatMovieDAO {
                 catMovies.add(new CatMovie(id, categoryId, movieIdFromDb, movieName, category)); // Adjust CatMovie constructor if necessary
             }
         } catch (SQLException e) {
-            throw new IOException("SQL Error fetching categories for movie: " + e.getMessage());
+            throw new MovieCollectionAppExceptions("SQL Error fetching categories for movie: " + e.getMessage());
         }
         return catMovies;
     }
 
     @Override
-    public void addMovieToCategory(Category category, Movie movie) throws IOException {
+    public void addMovieToCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         System.out.println("addMovieToCategory called with Category ID: " + category.getId() + ", Movie ID: " + movie.getId());
         try {
             Connection c = con.getConnection();
@@ -90,12 +91,12 @@ public class CatMovieDAODB implements ICatMovieDAO {
 
         } catch (SQLException e) {
             System.err.println("SQL Error: " + e.getMessage());
-            throw new IOException("Error adding movie to category", e);
+            throw new MovieCollectionAppExceptions("Error adding movie to category", e);
         }
     }
 
     @Override
-    public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
+    public void removeMovieFromCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         try {
             Connection c = con.getConnection();
             String sql = "DELETE FROM CatMovie WHERE category_id = ? AND movie_id = ?";
@@ -104,7 +105,7 @@ public class CatMovieDAODB implements ICatMovieDAO {
             ps.setInt(2,  movie.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new IOException("Error removing movie from category", e);
+            throw new MovieCollectionAppExceptions("Error removing movie from category", e);
         }
     }
 
