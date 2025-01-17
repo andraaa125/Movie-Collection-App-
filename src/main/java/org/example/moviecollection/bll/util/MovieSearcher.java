@@ -1,5 +1,6 @@
 package org.example.moviecollection.bll.util;
 
+import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Movie;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class MovieSearcher {
     }
 
     private boolean compareToMovieCategory(String query, Movie movie){
-        return movie.toString().toLowerCase().contains(query.toLowerCase());
+        if (movie.getCategory() == null) return false; // Handle null category
+        return movie.getCategory().toLowerCase().contains(query.toLowerCase());
     }
 
     private boolean compareToIMDBRating(String query, Movie movie) {
@@ -40,4 +42,5 @@ public class MovieSearcher {
             return false;
         }
     }
+
 }

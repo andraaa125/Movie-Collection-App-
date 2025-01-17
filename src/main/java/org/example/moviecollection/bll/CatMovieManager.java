@@ -21,14 +21,12 @@ public class CatMovieManager {
         return catMovieDAO.getCategoriesPerMovie(movieId);
     }
 
-    // Add a movie to a category
-    public void addMovieToCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
-        catMovieDAO.addMovieToCategory(category, movie);
+    public void addMovieToCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions {
+        catMovieDAO.addMovieToCategory(categoryId, movieId);
     }
 
-    // Remove a movie from a category
-    public void removeMovieFromCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
-        catMovieDAO.removeMovieFromCategory(category, movie);
+    public void removeMovieFromCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions {
+        catMovieDAO.removeMovieFromCategory(categoryId, movieId);
     }
 
 }

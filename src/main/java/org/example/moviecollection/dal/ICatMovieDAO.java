@@ -11,6 +11,6 @@ public interface ICatMovieDAO {
     List<CatMovie> getMoviesInCategory(int categoryId) throws MovieCollectionAppExceptions;
     List<CatMovie> getCategoriesPerMovie(int movieId) throws MovieCollectionAppExceptions;
 
-    void addMovieToCategory(Category category, Movie movie) throws MovieCollectionAppExceptions;
-    void removeMovieFromCategory(Category category, Movie movie) throws MovieCollectionAppExceptions;
+    void addMovieToCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions;
+    void removeMovieFromCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions;
 }

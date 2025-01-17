@@ -1,9 +1,6 @@
 package org.example.moviecollection.be;
 
-import javafx.collections.ObservableList;
-
 import java.time.LocalDate;
-
 
 public class Movie {
     private int id;
@@ -12,7 +9,7 @@ public class Movie {
     private double personalRating;
     private String filePath;
     private LocalDate lastView;
-    private ObservableList<String> categories;
+    private String category;
 
     public Movie(int id, String name, double imdbRating, double personalRating, String filePath, LocalDate lastView) {
         this.id = id;
@@ -21,21 +18,13 @@ public class Movie {
         this.personalRating = personalRating;
         this.filePath = filePath;
         this.lastView = lastView;
+        this.category = category;
     }
-
-    public Movie(String movieName, Double imdbRating, Double personalRating, String moviePath, ObservableList<String> selectedCategories) {
-        this.name = movieName;
-        this.imdbRating = imdbRating;
-        this.personalRating = personalRating;
-        this.filePath = moviePath;
-        this.categories = selectedCategories;
-    }
-
-    public Movie(int id, String name, Double imdbRating, Double personalRating, String filePath, java.sql.Date lastViewDate) {
+    public Movie(String name, String filePath, Double imdbRating, Double personalRating) {
         this.name = name;
+        this.filePath = filePath; // Correct
         this.imdbRating = imdbRating;
         this.personalRating = personalRating;
-        this.filePath = filePath;
     }
 
     public LocalDate getLastView() {
@@ -46,12 +35,16 @@ public class Movie {
         this.lastView = lastView;
     }
 
-    public ObservableList<String> getCategories() {
-        return categories;
+    public void setLastView(LocalDate lastView) {
+        this.lastView = lastView;
     }
 
-    public void setCategories(ObservableList<String> categories) {
-        this.categories = categories;
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -96,6 +89,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return id + "," + name + "," + imdbRating + "," + personalRating + "," + lastView;
+        return name + " (" + category + ")";
     }
+
 }

@@ -76,7 +76,6 @@ public class MovieDAODB implements IMovieDAO {
         }
     }
 
-
     @Override
     public void updateMovie(Movie movie) throws MovieCollectionAppExceptions {
         String sql = "UPDATE Movie SET name = ?, imdb_rating = ?, personal_rating = ?, file_path = ?, last_viewed = ? WHERE id = ?";
@@ -124,7 +123,5 @@ public class MovieDAODB implements IMovieDAO {
             throw new RuntimeException(e);
         }
     }
-
-
-    }
+}
 

@@ -1,9 +1,11 @@
 package org.example.moviecollection.bll;
 
+import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.bll.util.MovieSearcher;
 import org.example.moviecollection.bll.util.MoviesToDelete;
 import org.example.moviecollection.dal.IMovieDAO;
+import org.example.moviecollection.dal.db.CatMovieDAODB;
 import org.example.moviecollection.dal.db.MovieDAODB;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
@@ -23,6 +25,7 @@ public class MovieManager {
         List<Movie> allMovies = getAllMovies();
         return movieSearcher.search(allMovies, query);
     }
+
 
     public List<Movie> moviesToDelete() throws MovieCollectionAppExceptions{
         List<Movie> allMovies = getAllMovies();

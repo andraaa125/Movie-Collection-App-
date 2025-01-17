@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -51,6 +52,7 @@ public class MovieCollectionApplicationController implements Initializable {
     @FXML
     private ListView lstCatMovie;
 
+    private Movie movieToEdit;
     private ObservableList<Movie> movies = FXCollections.observableArrayList();
     private static final MovieModel movieModel = new MovieModel();
     private boolean isFilterActive = false; // Track the current state of the button
@@ -76,6 +78,12 @@ public class MovieCollectionApplicationController implements Initializable {
             throw new RuntimeException(e);
         }
         Platform.runLater(this::checkMoviesToDelete);
+        try {
+            handleMovieSelection();
+        } catch (MovieCollectionAppExceptions e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
@@ -110,6 +118,17 @@ public class MovieCollectionApplicationController implements Initializable {
         });
     }
 
+    public void handleMovieSelection() throws MovieCollectionAppExceptions {
+        lstMovie.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Movie selectedMovie = (Movie) newValue;
+                System.out.println("Selected movie ID: " + selectedMovie.getId());
+            } else {
+                System.out.println("No movie selected.");
+            }
+        });
+    }
+
     private void checkMoviesToDelete() {
         // Get the list of movies to warn about
         List<Movie> moviesToWarn = movieModel.getFilterMoviesToDelete();
@@ -129,9 +148,6 @@ public class MovieCollectionApplicationController implements Initializable {
             alert.showAndWait();
         }
     }
-
-
-
 
     public void onPlayBtnClick(ActionEvent actionEvent) {
         // Get the selected movie
@@ -262,6 +278,7 @@ public class MovieCollectionApplicationController implements Initializable {
         stage.setTitle("Add Movie");
         stage.setScene(scene);
         stage.show();
+        movieToEdit = null;
     }
 
     public void onEditMovieClick(ActionEvent actionEvent) throws MovieCollectionAppExceptions, IOException {
@@ -362,4 +379,57 @@ public class MovieCollectionApplicationController implements Initializable {
                 break;
         }
     }
-}
+
+    public void onAddMovieToCatClick(ActionEvent actionEvent) {
+        Category selectedCategory = (Category) listViewCategories.getSelectionModel().getSelectedItem();
+        Movie selectedMovie = (Movie) lstMovie.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null && selectedMovie != null) {
+            try {
+                movieModel.addMovieToCategory(selectedCategory.getId(),selectedMovie.getId());
+                refreshCategoryTable();
+                refreshMoviesInCategory(selectedCategory);
+                // Re-select the previously selected playlist
+                listViewCategories.getSelectionModel().select(selectedCategory);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (MovieCollectionAppExceptions e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            showAlert("Error", "Please select both category and movie.");
+        }
+
+    }
+
+    private void refreshCategoryTable() throws IOException {
+        List<Category> categoryList = movieModel.getAllCategories(); // Fetch updated playlists
+        listViewCategories.setItems(FXCollections.observableArrayList(categoryList)); // Update the table view
+    }
+
+    private void refreshMoviesInCategory(Category category) throws IOException {
+        List<CatMovie> sop = movieModel.getMoviesInCategory(category.getId());
+        lstCatMovie.setItems(FXCollections.observableArrayList(sop));
+    }
+
+    public void onRemoveMovieFromCatClick(ActionEvent actionEvent) {
+        CatMovie selectedCatMovie = (CatMovie) lstCatMovie.getSelectionModel().getSelectedItem();
+        Category selectedCategory= (Category) listViewCategories.getSelectionModel().getSelectedItem();
+        if (selectedCatMovie != null && selectedCategory != null) {
+            try {
+                movieModel.removeMovieFromCategory(selectedCatMovie.getCategoryId(),selectedCatMovie.getMovieId());
+                // Refresh both tables
+                refreshCategoryTable();
+                refreshMoviesInCategory(selectedCategory);
+                System.out.println("Updated songsOnPlaylist table for playlist ID: " + selectedCategory.getId());
+            } catch (IOException e) {
+                showAlert("Error", "Failed to remove song from playlist.");
+                e.printStackTrace();
+            } catch (MovieCollectionAppExceptions e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("No song or playlist selected.");
+            showAlert("Error", "No song selected.");
+        }
+    }
+    }

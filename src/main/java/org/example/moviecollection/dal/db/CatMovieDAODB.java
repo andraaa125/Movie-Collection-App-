@@ -2,11 +2,9 @@ package org.example.moviecollection.dal.db;
 
 import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
-import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.ICatMovieDAO;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,6 +73,24 @@ public class CatMovieDAODB implements ICatMovieDAO {
     }
 
     @Override
+    public void addMovieToCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions {
+        try {
+            Connection c = con.getConnection();
+            String sql = "INSERT INTO CatMovie (category_id, movie_id) VALUES (?, ?)";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ps.setInt(2, movieId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            // Print stack trace for any SQL exceptions
+            e.printStackTrace();
+            // Rethrow custom exception with the original SQLException
+            throw new MovieCollectionAppExceptions("Error adding movie to category", e);
+        }
+    }
+
+
+/*    @Override
     public void addMovieToCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         System.out.println("addMovieToCategory called with Category ID: " + category.getId() + ", Movie ID: " + movie.getId());
         try {
@@ -93,9 +109,9 @@ public class CatMovieDAODB implements ICatMovieDAO {
             System.err.println("SQL Error: " + e.getMessage());
             throw new MovieCollectionAppExceptions("Error adding movie to category", e);
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void removeMovieFromCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         try {
             Connection c = con.getConnection();
@@ -103,6 +119,19 @@ public class CatMovieDAODB implements ICatMovieDAO {
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, category.getId());
             ps.setInt(2,  movie.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new MovieCollectionAppExceptions("Error removing movie from category", e);
+        }
+    }*/
+    @Override
+    public void removeMovieFromCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions {
+        try {
+            Connection c = con.getConnection();
+            String sql = "DELETE FROM CatMovie WHERE category_id = ? AND movie_id = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ps.setInt(2,  movieId);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new MovieCollectionAppExceptions("Error removing movie from category", e);

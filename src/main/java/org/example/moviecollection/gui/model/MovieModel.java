@@ -154,13 +154,13 @@ public class MovieModel {
         return categoriesPerMovie;
     }
 
-
-    public void removeMovieFromCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
-        catMovieManager.removeMovieFromCategory(category, movie);
+    public void addMovieToCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions {
+        catMovieManager.addMovieToCategory(categoryId, movieId);
 
     }
-    public void addMovieToCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
-        catMovieManager.addMovieToCategory(category, movie);
+
+    public void removeMovieFromCategory(int categoryId, int movieId) throws MovieCollectionAppExceptions {
+        catMovieManager.removeMovieFromCategory(categoryId, movieId);
 
     }
 
