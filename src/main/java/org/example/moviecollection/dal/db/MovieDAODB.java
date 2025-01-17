@@ -63,17 +63,19 @@ public class MovieDAODB implements IMovieDAO {
     }
 
     @Override
-    public void deleteMovie(String name) throws IOException{
-        String deleteMovie = "DELETE FROM Movie WHERE name = ?";
-        String deleteFromCatMovie = "DELETE FROM Movie WHERE name = ?";
+    public void deleteMovie(int movieId) throws IOException{
+        String deleteMovie = "DELETE FROM Movie WHERE id = ?";
+
         try (Connection connection = con.getConnection();
-            PreparedStatement ps1 = connection.prepareStatement(deleteMovie)) {
-            ps1.setString(1, name);
+            PreparedStatement ps1 = connection.prepareStatement(deleteMovie))
+             {
+            ps1.setInt(1, movieId);
             ps1.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting movie and its dependencies: " + e.getMessage(), e);
         }
     }
+
 
     @Override
     public void updateMovie(Movie movie) throws IOException {
@@ -123,35 +125,6 @@ public class MovieDAODB implements IMovieDAO {
         }
     }
 
-    /*public List<String> checkMovieForWarning(){
-        String query = "SELECT title, last_opened, personal_rating FROM movies " +
-                "WHERE personal_rating < 6 " +
-                "AND last_opened < DATE_SUB(CURDATE(), INTERVAL 2 YEAR)";
-        try (Connection connection = con.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-             List<String> moviesToWarn = new ArrayList<>();
-
-             while (rs.next()) {
-                String name = rs.getString("name");
-                Date lastOpened = rs.getDate("last_opened");
-                int rating = rs.getInt("personal_rating");
-
-                moviesToWarn.add(String.format("%s (Last Opened: %s, Rating: %d)",
-                        name, lastOpened.toString(), rating));
-            }if (!moviesToWarn.isEmpty()) {
-                System.out.println("Warning! The following movies have a rating under 6 " +
-                        "and have not been opened in over 2 years:");
-                moviesToWarn.forEach(System.out::println);
-            } else {
-                System.out.println("No movies need to be reviewed.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-*/
 
     }
+

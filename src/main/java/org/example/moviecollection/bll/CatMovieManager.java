@@ -1,6 +1,8 @@
 package org.example.moviecollection.bll;
 
 import org.example.moviecollection.be.CatMovie;
+import org.example.moviecollection.be.Category;
+import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.ICatMovieDAO;
 import org.example.moviecollection.dal.db.CatMovieDAODB;
 
@@ -20,13 +22,13 @@ public class CatMovieManager {
     }
 
     // Add a movie to a category
-    public void addMovieToCategory(int categoryId, int movieId) throws IOException {
-        catMovieDAO.addMovieToCategory(categoryId, movieId);
+    public void addMovieToCategory(Category category, Movie movie) throws IOException {
+        catMovieDAO.addMovieToCategory(category, movie);
     }
 
     // Remove a movie from a category
-    public void removeMovieFromCategory(int categoryId, int movieId) throws IOException {
-        catMovieDAO.removeMovieFromCategory(categoryId, movieId);
+    public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
+        catMovieDAO.removeMovieFromCategory(category, movie);
     }
 
 }

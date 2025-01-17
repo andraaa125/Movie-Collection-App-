@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -16,8 +17,7 @@ import org.example.moviecollection.gui.model.MovieModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AddEditMovieController implements Initializable{
     @FXML
@@ -55,7 +55,6 @@ public class AddEditMovieController implements Initializable{
         // Bind labels directly to the slider values with formatting
         IMDBScore.textProperty().bind(IMDBGradeSlider.valueProperty().asString("%.1f"));
         PersonalScore.textProperty().bind(PersonalGradeSlider.valueProperty().asString("%.1f"));
-
 
     }
 
@@ -112,7 +111,6 @@ public class AddEditMovieController implements Initializable{
         }
     }
 
-
     public void setMovieToEdit(Movie movieToEdit) throws IOException {
         this.movieToEdit = movieToEdit;
         txtName.setText(movieToEdit.getName());
@@ -135,6 +133,32 @@ public class AddEditMovieController implements Initializable{
         stage.close();
     }
 
+    /*public void onSaveMovieClick(ActionEvent actionEvent) {
+        String newMovieName = txtName.getText();
+        String newMoviePath = txtFilePath.getText();
+        Double newImdbRating = IMDBGradeSlider.getValue();
+        Double newPersonalRating = PersonalGradeSlider.getValue();
+        try {
+            Movie newMovie = new Movie(newMovieName, newImdbRating, newPersonalRating, newMoviePath, selectedCategories);
+            movieModel.addMovie(newMovie);
+            for (String categoryName : selectedCategories) {
+                // Retrieve the Category object based on the category name
+                Category category = movieModel.getCategoryByName(categoryName);
+                if (category != null) {
+                    // Add the created movie to the retrieved category
+                    movieModel.addMovieToCategory(category, newMovie);
+                }
+                System.out.println("New movie added with categories.");
+            }
+            movieCollectionApplicationController.loadCategoriesFromDatabase();
+            movieCollectionApplicationController.loadMoviesFromDatabase();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
     public void onSaveMovieClick(ActionEvent actionEvent) {
         try {
             if (txtName.getText().isEmpty() || txtFilePath.getText().isEmpty() || lstCategory.getItems().isEmpty()) {
@@ -152,26 +176,49 @@ public class AddEditMovieController implements Initializable{
                 movieToEdit.setFilePath(newMoviePath);
                 movieToEdit.setImdbRating(newImdbRating);
                 movieToEdit.setPersonalRating(newPersonalRating);
+                movieToEdit.setCategories(selectedCategories);
                 movieModel.updateMovie(movieToEdit);
-                System.out.println("Movie updated");
+
+                System.out.println("Movie updated with new categories.");
+
+                // Remove old categories and add new ones
+                for (String categoryName : selectedCategories) {
+                    Category category = movieModel.getCategoryByName(categoryName);
+                    if (category != null) {
+                        movieModel.addMovieToCategory(category, movieToEdit); // Add movie to new category
+
+                    }
+                }
             } else {
                 Movie newMovie = new Movie(newMovieName, newImdbRating, newPersonalRating, newMoviePath, selectedCategories);
                 movieModel.addMovie(newMovie);
-                System.out.println("Movie added");
-            }
-            movieCollectionApplicationController.loadMoviesFromDatabase();
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                // Associate the movie with selected categories
+                for (String categoryName : selectedCategories) {
+                    // Retrieve the Category object based on the category name
+                    Category category = movieModel.getCategoryByName(categoryName);
+                    if (category != null) {
+                        // Add the created movie to the retrieved category
+                        movieModel.addMovieToCategory(category, newMovie);
+                    }
+                } System.out.println("New movie added with categories.");
+
+                }
+                movieCollectionApplicationController.loadCategoriesFromDatabase();
+                movieCollectionApplicationController.loadMoviesFromDatabase();
+
+
+        } catch (IOException e) {
+            movieCollectionApplicationController.showAlert("Error", "An error occurred.");
+            throw new RuntimeException(e);
+        }finally {
+            // Ensure the stage closes regardless of errors
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
-        } catch (Exception e) {
-            if (e.getMessage().contains("Duplicate entry")) {
-                movieCollectionApplicationController.showAlert("Error", "Movie already exists!");
-            } else {
-                movieCollectionApplicationController.showAlert("Error", "An error occurred: " + e.getMessage());
-                System.err.println("Error during movie save: " + e.getMessage());
-                e.printStackTrace();
-            }
         }
     }
+
+
+
 
     public void onChooseClick(ActionEvent actionEvent) {// Open a file chooser dialog to select a song file
         FileChooser fileChooser = new FileChooser();

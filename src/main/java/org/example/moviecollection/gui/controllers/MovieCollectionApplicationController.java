@@ -288,13 +288,13 @@ public class MovieCollectionApplicationController implements Initializable {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
                     // Delete the song from the database via the model
-                    movieModel.deleteMovie(selectedMovie.getName());
+                    movieModel.deleteMovie(selectedMovie.getId());
                     lstMovie.getItems().remove(selectedMovie);
                     lstMovie.refresh();
                     // Inform the user about the successful deletion
-                    showInfo("Success", "The song was successfully deleted.");
+                    showInfo("Success", "The movie was successfully deleted.");
                 } catch (Exception e) {
-                    showAlert("Error", "An error occurred while deleting the song: " + e.getMessage());
+                    showAlert("Error", "An error occurred while deleting the movie: " + e.getMessage());
                 }
             }
         } else {

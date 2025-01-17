@@ -2,6 +2,7 @@ package org.example.moviecollection.dal.db;
 
 import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
+import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.ICatMovieDAO;
 
 import java.io.IOException;
@@ -73,13 +74,13 @@ public class CatMovieDAODB implements ICatMovieDAO {
     }
 
     @Override
-    public void addMovieToCategory(int categoryId, int movieId) throws IOException {
+    public void addMovieToCategory(Category category, Movie movie) throws IOException {
         try {
             Connection c = con.getConnection();
             String sql = "INSERT INTO CatMovie (CategoryId, MovieId) VALUES (?, ?)";
             PreparedStatement ps = c.prepareStatement(sql);
-            ps.setInt(1, categoryId);
-            ps.setInt(2, movieId);
+            ps.setInt(1, category.getId());
+            ps.setInt(2, movie.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new IOException("Error adding movie to category", e);
@@ -87,17 +88,17 @@ public class CatMovieDAODB implements ICatMovieDAO {
     }
 
     @Override
-    public void removeMovieFromCategory(int categoryId, int movieId) throws IOException {
+    public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
         try {
             Connection c = con.getConnection();
             String sql = "DELETE FROM CatMovie WHERE CategoryId = ? AND MovieId = ?";
             PreparedStatement ps = c.prepareStatement(sql);
-            ps.setInt(1, categoryId);
-            ps.setInt(2, movieId);
+            ps.setInt(1, category.getId());
+            ps.setInt(2,  movie.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new IOException("Error removing movie from category", e);
         }
-
     }
+
 }

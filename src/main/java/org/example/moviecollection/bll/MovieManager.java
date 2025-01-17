@@ -34,8 +34,8 @@ public class MovieManager {
         movieDAO.addMovie(movie);
     }
 
-    public void deleteMovie(String name) throws IOException{
-        movieDAO.deleteMovie(name);
+    public void deleteMovie(int movieId) throws IOException{
+        movieDAO.deleteMovie(movieId);
     }
 
     public void updateMovie(Movie movie) throws IOException{

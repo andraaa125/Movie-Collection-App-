@@ -35,6 +35,15 @@ public class MovieModel {
         return categories;
     }
 
+    public Category getCategoryByName(String categoryName) {
+        for (Category category : categories) {
+            if (category.getName().equals(categoryName)) {
+                return category;
+            }
+        }
+        return null;
+    }
+
     public void deleteCategory(String categoryName) throws IOException {
         categoryManager.deleteCategory(categoryName);
     }
@@ -69,8 +78,8 @@ public class MovieModel {
         movieManager.addMovie(newMovie);
     }
 
-    public void deleteMovie(String name) throws IOException {
-        movieManager.deleteMovie(name);
+    public void deleteMovie(int movieId) throws IOException {
+        movieManager.deleteMovie(movieId);
     }
 
     public void updateMovie(Movie movieToEdit) throws IOException {
@@ -143,12 +152,12 @@ public class MovieModel {
         return categoriesPerMovie;
     }
 
-    public void addMovieToCategory(int categoryId, int movieId) throws IOException {
-        catMovieManager.addMovieToCategory(categoryId, movieId);
-    }
 
-    public void removeMovieFromCategory(int categoryId, int movieId) throws IOException {
-        catMovieManager.removeMovieFromCategory(categoryId, movieId);
+    public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
+        catMovieManager.removeMovieFromCategory(category, movie);
+    }
+    public void addMovieToCategory(Category category, Movie movie) throws IOException {
+        catMovieManager.addMovieToCategory(category, movie);
     }
 
 
