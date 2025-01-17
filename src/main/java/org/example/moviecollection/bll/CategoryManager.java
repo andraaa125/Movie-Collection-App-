@@ -1,12 +1,10 @@
 package org.example.moviecollection.bll;
 
-import javafx.collections.ObservableList;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.dal.ICategoryDAO;
 import org.example.moviecollection.dal.db.CategoryDAODB;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 

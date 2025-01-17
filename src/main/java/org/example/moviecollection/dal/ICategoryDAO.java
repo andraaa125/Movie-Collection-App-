@@ -3,7 +3,6 @@ package org.example.moviecollection.dal;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface ICategoryDAO {

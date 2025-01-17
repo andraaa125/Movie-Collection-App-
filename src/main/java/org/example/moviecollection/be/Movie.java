@@ -1,11 +1,9 @@
 package org.example.moviecollection.be;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+
 
 public class Movie {
     private int id;
@@ -40,7 +38,6 @@ public class Movie {
         this.filePath = filePath;
     }
 
-    // Getter and setter for lastViewDate
     public LocalDate getLastView() {
         return lastView;
     }

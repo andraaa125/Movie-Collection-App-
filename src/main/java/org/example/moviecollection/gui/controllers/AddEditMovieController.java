@@ -134,31 +134,6 @@ public class AddEditMovieController implements Initializable{
         stage.close();
     }
 
-    /*public void onSaveMovieClick(ActionEvent actionEvent) {
-        String newMovieName = txtName.getText();
-        String newMoviePath = txtFilePath.getText();
-        Double newImdbRating = IMDBGradeSlider.getValue();
-        Double newPersonalRating = PersonalGradeSlider.getValue();
-        try {
-            Movie newMovie = new Movie(newMovieName, newImdbRating, newPersonalRating, newMoviePath, selectedCategories);
-            movieModel.addMovie(newMovie);
-            for (String categoryName : selectedCategories) {
-                // Retrieve the Category object based on the category name
-                Category category = movieModel.getCategoryByName(categoryName);
-                if (category != null) {
-                    // Add the created movie to the retrieved category
-                    movieModel.addMovieToCategory(category, newMovie);
-                }
-                System.out.println("New movie added with categories.");
-            }
-            movieCollectionApplicationController.loadCategoriesFromDatabase();
-            movieCollectionApplicationController.loadMoviesFromDatabase();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 
     public void onSaveMovieClick(ActionEvent actionEvent) throws IOException {
         try {
@@ -220,8 +195,6 @@ public class AddEditMovieController implements Initializable{
                 movieCollectionApplicationController.loadCategoriesFromDatabase();
                 movieCollectionApplicationController.loadMoviesFromDatabase();
             System.out.println("Categories and Movies reloaded from database.");
-                //movieCollectionApplicationController.lstMovie.getItems().clear();
-                //movieCollectionApplicationController.lstMovie.setItems(movieModel.getAllMovies());
 
 
         } catch (MovieCollectionAppExceptions e) {

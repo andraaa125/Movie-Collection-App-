@@ -7,7 +7,6 @@ import org.example.moviecollection.dal.ICatMovieDAO;
 import org.example.moviecollection.dal.db.CatMovieDAODB;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
-import java.io.IOException;
 import java.util.List;
 
 public class CatMovieManager {

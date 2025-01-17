@@ -7,7 +7,6 @@ import org.example.moviecollection.dal.IMovieDAO;
 import org.example.moviecollection.dal.db.MovieDAODB;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
-import java.io.IOException;
 import java.util.List;
 
 public class MovieManager {
@@ -22,8 +21,7 @@ public class MovieManager {
 
     public List<Movie> searchMovie(String query) throws MovieCollectionAppExceptions{
         List<Movie> allMovies = getAllMovies();
-        List<Movie> searchResult = movieSearcher.search(allMovies, query);
-        return searchResult;
+        return movieSearcher.search(allMovies, query);
     }
 
     public List<Movie> moviesToDelete() throws MovieCollectionAppExceptions{

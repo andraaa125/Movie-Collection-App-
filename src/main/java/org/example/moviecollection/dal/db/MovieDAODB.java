@@ -4,7 +4,6 @@ import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.IMovieDAO;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

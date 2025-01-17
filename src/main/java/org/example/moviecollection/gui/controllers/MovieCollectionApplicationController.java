@@ -19,7 +19,6 @@ import org.example.moviecollection.MovieCollectionApplication;
 import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
-import org.example.moviecollection.bll.FilterService;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 import org.example.moviecollection.gui.model.MovieModel;
 
@@ -27,7 +26,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.*;
 import java.util.List;
 
@@ -55,7 +53,6 @@ public class MovieCollectionApplicationController implements Initializable {
 
     private ObservableList<Movie> movies = FXCollections.observableArrayList();
     private static final MovieModel movieModel = new MovieModel();
-    private final FilterService filterService = new FilterService();
     private boolean isFilterActive = false; // Track the current state of the button
 
     @Override

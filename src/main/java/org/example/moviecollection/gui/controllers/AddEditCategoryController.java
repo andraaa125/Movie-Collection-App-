@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.moviecollection.be.Category;
-import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.gui.model.MovieModel;
 
 

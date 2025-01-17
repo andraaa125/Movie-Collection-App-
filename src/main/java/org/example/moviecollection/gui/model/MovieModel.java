@@ -10,7 +10,6 @@ import org.example.moviecollection.bll.CategoryManager;
 import org.example.moviecollection.bll.MovieManager;
 import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
@@ -46,14 +45,6 @@ public class MovieModel {
         return null;
     }
 
-/*
-    public Category getCategoryByName(String categoryName) {
-        return getAllCategories().stream()
-                .filter(category -> category.getName().equalsIgnoreCase(categoryName.trim()))
-                .findFirst()
-                .orElse(null);
-    }
-*/
 
     public void deleteCategory(String categoryName) throws MovieCollectionAppExceptions {
         categoryManager.deleteCategory(categoryName);
