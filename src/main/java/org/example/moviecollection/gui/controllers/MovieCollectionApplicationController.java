@@ -28,12 +28,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class MovieCollectionApplicationController implements Initializable {
+    @FXML
+    private ComboBox<String> cbSortOptions;
     @FXML
     private Button btnReset;
     @FXML
@@ -53,6 +53,7 @@ public class MovieCollectionApplicationController implements Initializable {
     @FXML
     private ListView lstCatMovie;
 
+    private ObservableList<Movie> movies = FXCollections.observableArrayList();
     private static final MovieModel movieModel = new MovieModel();
     private final FilterService filterService = new FilterService();
     private boolean isFilterActive = false; // Track the current state of the button
@@ -61,6 +62,16 @@ public class MovieCollectionApplicationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadCategoriesFromDatabase();
         loadMoviesFromDatabase();
+
+        // Initialize sorting options if using ComboBox
+        cbSortOptions.setItems(FXCollections.observableArrayList(
+                "Sort by Name",
+                "Sort by IMDB Rating",
+                "Sort by My Rating",
+                "Sort by Last View Date"
+        ));
+        cbSortOptions.setOnAction(this::onSortOptionsSelected);
+
         btnReset.setDisable(true);
         try {
             handleCategorySelection();
@@ -68,13 +79,8 @@ public class MovieCollectionApplicationController implements Initializable {
             throw new RuntimeException(e);
         }
         Platform.runLater(this::checkMoviesToDelete);
-/*        lstCatMovie.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                listViewCategories.getSelectionModel().clearSelection();
-            }
-        });*/
-
     }
+
 
     public void handleCategorySelection() throws MovieCollectionAppExceptions {
         listViewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -331,6 +337,32 @@ public class MovieCollectionApplicationController implements Initializable {
             txtQuery.clear();
             lstMovie.refresh();
             lstMovie.setItems(movieModel.getAllMovies());
+        }
+    }
+
+    public void onSortOptionsSelected(ActionEvent actionEvent) {
+        String selectedOption = cbSortOptions.getValue();
+        ObservableList<Movie> movies = lstMovie.getItems();
+
+        switch (selectedOption) {
+            case "Sort by Name":
+                FXCollections.sort(movies, Comparator.comparing(Movie::getName, String.CASE_INSENSITIVE_ORDER));
+                break;
+
+            case "Sort by IMDB Rating":
+                FXCollections.sort(movies, Comparator.comparingDouble(Movie::getImdbRating).reversed()); // Descending order
+                break;
+
+            case "Sort by My Rating":
+                FXCollections.sort(movies, Comparator.comparingDouble(Movie::getPersonalRating).reversed()); // Descending order
+                break;
+
+            case "Sort by Last View Date":
+                FXCollections.sort(movies, Comparator.comparing(Movie::getLastView, Comparator.nullsLast(Comparator.naturalOrder())).reversed());
+                break;
+
+            default:
+                break;
         }
     }
 }
