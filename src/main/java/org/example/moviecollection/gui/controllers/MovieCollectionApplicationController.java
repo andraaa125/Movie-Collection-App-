@@ -2,6 +2,7 @@ package org.example.moviecollection.gui.controllers;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import org.example.moviecollection.MovieCollectionApplication;
+import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.bll.FilterService;
@@ -25,7 +27,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MovieCollectionApplicationController implements Initializable {
@@ -45,18 +49,61 @@ public class MovieCollectionApplicationController implements Initializable {
     private TableColumn LastViewColumn;
     @FXML
     private ListView listViewCategories;
+    @FXML
+    private ListView lstCatMovie;
 
     private static final MovieModel movieModel = new MovieModel();
     private final FilterService filterService = new FilterService();
     private boolean isFilterActive = false; // Track the current state of the button
-    private boolean moviesToWarn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadCategoriesFromDatabase();
         loadMoviesFromDatabase();
         btnReset.setDisable(true);
+        try {
+            handleCategorySelection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Platform.runLater(this::checkMoviesToDelete);
+/*        lstCatMovie.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                listViewCategories.getSelectionModel().clearSelection();
+            }
+        });*/
+
+    }
+
+    public void handleCategorySelection() throws IOException {
+        listViewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            // Get the selected category
+            Category selectedCategory = (Category) listViewCategories.getSelectionModel().getSelectedItem();
+
+            if (selectedCategory == null) {
+                lstCatMovie.getItems().clear();  // Clear the list if no category is selected
+                return;
+            }
+            int categoryId = selectedCategory.getId();
+
+            // Get the list of CatMovies associated with the selected category
+            List<CatMovie> catMovies = movieModel.getMoviesInCategory(categoryId);
+
+            // Create a new list to hold Movie objects
+            List<Movie> movies = new ArrayList<>();
+
+            // Loop through each CatMovie and find the corresponding Movie
+            for (CatMovie catMovie : catMovies) {
+                // Find the Movie object by matching MovieId
+                for (Movie movie : movieModel.getAllMovies()) {
+                    if (movie.getId() == catMovie.getMovieId()) {
+                        movies.add(movie);  // Add the matching movie to the list
+                        break;  // Exit the inner loop as we found the movie
+                    }
+                }
+            }
+            lstCatMovie.getItems().setAll(catMovies);
+        });
     }
 
     private void checkMoviesToDelete() {

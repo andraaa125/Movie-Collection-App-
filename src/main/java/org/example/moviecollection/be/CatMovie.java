@@ -2,15 +2,26 @@ package org.example.moviecollection.be;
 
 public class CatMovie {
     private final int id;
-    private int categoryID;
-    private int movieID;
+    private int categoryId;
+    private int movieId;
     private Movie movie;
     private Category category;
+    private String movieName;
     
-    public CatMovie(int id, int categoryID, int movieID) {
+    public CatMovie(int id, int categoryId, int movieId, String movieName, Category category) {
         this.id = id;
-        this.categoryID = categoryID;
-        this.movieID = movieID;
+        this.categoryId = categoryId;
+        this.movieId = movieId;
+        this.movieName = movieName;
+        this.category = category;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
 
     public Category getCategory() {
@@ -29,20 +40,20 @@ public class CatMovie {
         this.movie = movie;
     }
 
-    public int getMovieID() {
-        return movieID;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setMovieID(int movieID) {
-        this.movieID = movieID;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public int getId() {
@@ -51,10 +62,6 @@ public class CatMovie {
 
     @Override
     public String toString() {
-        return "CatMovie{" +
-                "id=" + id +
-                ", categoryId=" + categoryID +
-                ", movieId=" + movieID +
-                '}';
+        return movieName;
     }
 }

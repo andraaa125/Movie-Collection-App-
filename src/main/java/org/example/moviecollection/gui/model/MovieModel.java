@@ -2,8 +2,10 @@ package org.example.moviecollection.gui.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
+import org.example.moviecollection.bll.CatMovieManager;
 import org.example.moviecollection.bll.CategoryManager;
 import org.example.moviecollection.bll.MovieManager;
 
@@ -15,11 +17,13 @@ import java.util.Set;
 public class MovieModel {
     private final CategoryManager categoryManager = new CategoryManager();
     private final MovieManager movieManager = new MovieManager();
+    private final CatMovieManager catMovieManager = new CatMovieManager();
     private final ObservableList<Category> categories = FXCollections.observableArrayList();
     private final ObservableList<Movie> movies = FXCollections.observableArrayList();
     private final ObservableList<Movie> searchedMovies = FXCollections.observableArrayList();
     private final ObservableList<Movie> shouldDeleteMovies = FXCollections.observableArrayList();
-
+    private final ObservableList<CatMovie> moviesInCategory = FXCollections.observableArrayList();
+    private final ObservableList<CatMovie> categoriesPerMovie = FXCollections.observableArrayList();
 
     public ObservableList<Category> getAllCategories() {
         try {
@@ -108,8 +112,6 @@ public class MovieModel {
         return shouldDeleteMovies;
     }
 
-
-
     public boolean isCategoryExists(String categoryName) throws IOException {
         return categoryManager.isCategoryExists(categoryName); // Assuming `categoryManager` is an instance of `CategoryManager`
     }
@@ -118,10 +120,36 @@ public class MovieModel {
         movieManager.updateLastView(movieId);
     }
 
-    /*public List<String> checkMovieForWarning() {
-        return movieManager.checkMovieForWarning();
-    }*/
+    // Get ObservableList of movies in a category
+    public ObservableList<CatMovie> getMoviesInCategory(int categoryId) {
+        try {
+            List<CatMovie> allMoviesInCategory = catMovieManager.getMoviesInCategory(categoryId);
+            moviesInCategory.setAll(allMoviesInCategory);
+        } catch (IOException e) {
+            System.out.println("Error loading movies in category: " + e.getMessage());
+        }
+        return moviesInCategory;
+    }
 
+    // Method to get all categories related to a specific movie
+    public ObservableList<CatMovie> getCategoriesPerMovie(int movieId) {
+        try {
+            List<CatMovie> allCategoriesPerMovie = catMovieManager.getCategoriesPerMovie(movieId);
+            categoriesPerMovie.setAll(allCategoriesPerMovie); // Populate the ObservableList with categories
+        } catch (IOException e) {
+            System.out.println("Error loading categories for movie: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return categoriesPerMovie;
+    }
+
+    public void addMovieToCategory(int categoryId, int movieId) throws IOException {
+        catMovieManager.addMovieToCategory(categoryId, movieId);
+    }
+
+    public void removeMovieFromCategory(int categoryId, int movieId) throws IOException {
+        catMovieManager.removeMovieFromCategory(categoryId, movieId);
+    }
 
 
 }

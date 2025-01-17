@@ -46,9 +46,4 @@ public class MovieManager {
         movieDAO.updateLastView(movieId);
     }
 
-    /*public List<String> checkMovieForWarning() {
-        return movieDAO.checkMovieForWarning();
-    }*/
-
-
 }

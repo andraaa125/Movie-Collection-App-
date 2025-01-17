@@ -31,16 +31,16 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="283.0" layoutY="117.0" text="Movie">
+      <Label layoutX="459.0" layoutY="117.0" text="Movie">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <TableView fx:id="lstMovie" layoutX="283.0" layoutY="153.0" opacity="0.9" prefHeight="410.0" prefWidth="609.0">
+      <TableView fx:id="lstMovie" layoutX="459.0" layoutY="153.0" opacity="0.9" prefHeight="410.0" prefWidth="434.0">
         <columns>
           <TableColumn fx:id="NameColumn" prefWidth="192.0" text="Name" />
-            <TableColumn fx:id="IMDbRatingColumn" minWidth="8.0" prefWidth="118.39990234375" text="IMDB Rating" />
-            <TableColumn fx:id="MyRatingColumn" prefWidth="137.59991455078125" text="My Rating" />
-            <TableColumn fx:id="LastViewColumn" minWidth="3.99993896484375" prefWidth="160.80001220703127" text="Last View" />
+            <TableColumn fx:id="IMDbRatingColumn" minWidth="8.0" prefWidth="83.20001220703125" text="IMDB Rating" />
+            <TableColumn fx:id="MyRatingColumn" prefWidth="82.39996337890625" text="My Rating" />
+            <TableColumn fx:id="LastViewColumn" minWidth="3.99993896484375" prefWidth="75.2000732421875" text="Last View" />
         </columns>
       </TableView>
       <Button layoutX="171.0" layoutY="113.0" mnemonicParsing="false" onAction="#onEditCategoryClick" prefHeight="28.0" prefWidth="15.0" styleClass="btnEdit">
@@ -88,7 +88,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="345.0" layoutY="105.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="28.0" prefWidth="51.0" styleClass="btnEdit">
+      <Button layoutX="525.0" layoutY="105.0" mnemonicParsing="false" onAction="#onPlayBtnClick" prefHeight="28.0" prefWidth="51.0" styleClass="btnEdit">
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -110,5 +110,6 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <ListView fx:id="lstCatMovie" layoutX="277.0" layoutY="153.0" opacity="0.89" prefHeight="410.0" prefWidth="160.0" />
    </children>
 </AnchorPane>

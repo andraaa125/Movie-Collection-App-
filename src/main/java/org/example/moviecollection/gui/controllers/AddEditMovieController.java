@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.example.moviecollection.be.CatMovie;
+import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.gui.model.MovieModel;
 
@@ -49,30 +51,15 @@ public class AddEditMovieController implements Initializable{
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-        displayCategoryName();
+        displayCategoryChoice();
         // Bind labels directly to the slider values with formatting
         IMDBScore.textProperty().bind(IMDBGradeSlider.valueProperty().asString("%.1f"));
         PersonalScore.textProperty().bind(PersonalGradeSlider.valueProperty().asString("%.1f"));
+
+
     }
 
-    public void setMovieToEdit(Movie movieToEdit) throws IOException {
-        this.movieToEdit = movieToEdit;
-        txtName.setText(movieToEdit.getName());
-        txtFilePath.setText(movieToEdit.getFilePath());
-
-        ObservableList<String> movieCategories = movieToEdit.getCategories();
-        if (movieCategories == null) {
-            movieCategories = FXCollections.observableArrayList(); // Initialize as an empty list if null
-        }
-        System.out.println("Categories: " + movieCategories);
-        selectedCategories.clear(); // Clear any existing categories
-        selectedCategories.addAll(movieCategories); // Add the movie's categories to the selectedCategories list
-        lstCategory.setItems(selectedCategories); // Update the ListView with the selected categories
-        IMDBGradeSlider.setValue(movieToEdit.getImdbRating());
-        PersonalGradeSlider.setValue(movieToEdit.getPersonalRating());
-    }
-
-    public void displayCategoryName() {
+    public void displayCategoryChoice() {
         try {
             // Fetch categories from the model
             ObservableList<String> categories = movieModel.displayCategoryName(); // Fetch updated list
@@ -85,6 +72,62 @@ public class AddEditMovieController implements Initializable{
             System.out.println("Error loading categories: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void displayCategoriesPerMovie(Movie selectedMovie) {
+        if (selectedMovie == null) {
+            System.out.println("No movie selected.");
+            return; // If no movie is selected, exit the method early
+        }
+
+        // Fetch categories related to the selected movie (specific categories for this movie)
+        ObservableList<CatMovie> catMovies = movieModel.getCategoriesPerMovie(selectedMovie.getId()); // Get categories for the selected movie
+        System.out.println("Categories for selected movie (ID: " + selectedMovie.getId() + "): " + catMovies);
+
+        // Clear the current categories in lstCategory
+        lstCategory.getItems().clear();
+        System.out.println("Cleared existing categories in ListView.");
+
+        // Add only the categories related to the selected movie to lstCategory
+        for (CatMovie catMovie : catMovies) {
+            if (catMovie.getCategory() != null) { // Check if category is not null
+                String categoryName = catMovie.getCategory().getName(); // Get the category name
+                lstCategory.getItems().add(categoryName); // Add category name to the list
+                System.out.println("Added category: " + categoryName);
+            } else {
+                System.out.println("CatMovie has null category. Skipping.");
+            }
+        }
+
+        // Optionally, mark the categories that the movie belongs to (already selected categories)
+        for (CatMovie catMovie : catMovies) {
+            if (catMovie.getCategory() != null) { // Check if category is not null
+                String categoryName = catMovie.getCategory().getName();
+                int index = lstCategory.getItems().indexOf(categoryName); // Find the index of the category
+                if (index != -1) {
+                    lstCategory.getSelectionModel().select(index); // Select the category in the list
+                    System.out.println("Selected category: " + categoryName);
+                }
+            }
+        }
+    }
+
+
+    public void setMovieToEdit(Movie movieToEdit) throws IOException {
+        this.movieToEdit = movieToEdit;
+        txtName.setText(movieToEdit.getName());
+        txtFilePath.setText(movieToEdit.getFilePath());
+
+        ObservableList<String> movieCategories = movieToEdit.getCategories();
+        if (movieCategories == null) {
+            movieCategories = FXCollections.observableArrayList(); // Initialize as an empty list if null
+        }
+        selectedCategories.clear(); // Clear any existing categories
+        selectedCategories.addAll(movieCategories); // Add the movie's categories to the selectedCategories list
+        lstCategory.setItems(selectedCategories); // Update the ListView with the selected categories
+        IMDBGradeSlider.setValue(movieToEdit.getImdbRating());
+        PersonalGradeSlider.setValue(movieToEdit.getPersonalRating());
+        displayCategoriesPerMovie(movieToEdit);
     }
 
     public void onCancelMovieClick(ActionEvent actionEvent) {
