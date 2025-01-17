@@ -21,11 +21,11 @@ public class CatMovieDAODB implements ICatMovieDAO {
         List<CatMovie> catMovies = new ArrayList<>();
         try {
             Connection c = con.getConnection();
-            String sql = "SELECT cm.id AS catMovieId, cm.category_Id AS categoryId, cm.movie_Id AS movieId, m.name AS movieName, c.name AS categoryName " +
+            String sql = "SELECT cm.id AS catMovieId, cm.category_id AS categoryId, cm.movie_id AS movieId, m.name AS movieName, c.name AS categoryName " +
                     "FROM CatMovie cm " +
-                    "JOIN Movie m ON cm.movie_Id = m.id " +
-                    "JOIN Category c ON cm.category_Id = c.id " +
-                    "WHERE cm.category_Id = ?";
+                    "JOIN Movie m ON cm.movie_id = m.id " +
+                    "JOIN Category c ON cm.category_id = c.id " +
+                    "WHERE cm.category_id = ?";
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, categoryId);
             ResultSet rs = ps.executeQuery();
@@ -49,11 +49,11 @@ public class CatMovieDAODB implements ICatMovieDAO {
         List<CatMovie> catMovies = new ArrayList<>();
         try {
             Connection c = con.getConnection();
-            String sql = "SELECT cm.id AS catMovieId, cm.category_Id AS categoryId, cm.movie_Id AS movieId, m.name AS movieName, c.name AS categoryName " +
+            String sql = "SELECT cm.id AS catMovieId, cm.category_id AS categoryId, cm.movie_id AS movieId, m.name AS movieName, c.name AS categoryName " +
                     "FROM CatMovie cm " +
-                    "JOIN Movie m ON cm.movie_Id = m.id " +
-                    "JOIN Category c ON cm.category_Id = c.id " +
-                    "WHERE cm.movie_Id = ?";
+                    "JOIN Movie m ON cm.movie_id = m.id " +
+                    "JOIN Category c ON cm.category_id = c.id " +
+                    "WHERE cm.movie_id = ?";
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, movieId);  // Set the movieId parameter in the query
             ResultSet rs = ps.executeQuery();
@@ -75,14 +75,21 @@ public class CatMovieDAODB implements ICatMovieDAO {
 
     @Override
     public void addMovieToCategory(Category category, Movie movie) throws IOException {
+        System.out.println("addMovieToCategory called with Category ID: " + category.getId() + ", Movie ID: " + movie.getId());
         try {
             Connection c = con.getConnection();
-            String sql = "INSERT INTO CatMovie (CategoryId, MovieId) VALUES (?, ?)";
+            String sql = "INSERT INTO CatMovie (category_id, movie_id) VALUES (?, ?)";
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, category.getId());
             ps.setInt(2, movie.getId());
-            ps.executeUpdate();
+            System.out.println("Executing SQL: " + ps.toString());
+
+            // Execute the SQL command
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
         } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
             throw new IOException("Error adding movie to category", e);
         }
     }
@@ -91,7 +98,7 @@ public class CatMovieDAODB implements ICatMovieDAO {
     public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
         try {
             Connection c = con.getConnection();
-            String sql = "DELETE FROM CatMovie WHERE CategoryId = ? AND MovieId = ?";
+            String sql = "DELETE FROM CatMovie WHERE category_id = ? AND movie_id = ?";
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, category.getId());
             ps.setInt(2,  movie.getId());

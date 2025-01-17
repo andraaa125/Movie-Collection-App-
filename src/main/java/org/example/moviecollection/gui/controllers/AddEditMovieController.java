@@ -159,7 +159,7 @@ public class AddEditMovieController implements Initializable{
         }
     }*/
 
-    public void onSaveMovieClick(ActionEvent actionEvent) {
+    public void onSaveMovieClick(ActionEvent actionEvent) throws IOException {
         try {
             if (txtName.getText().isEmpty() || txtFilePath.getText().isEmpty() || lstCategory.getItems().isEmpty()) {
                 movieCollectionApplicationController.showAlert("Validation Error", "All fields must be filled!");
@@ -170,6 +170,13 @@ public class AddEditMovieController implements Initializable{
             Double newImdbRating = IMDBGradeSlider.getValue();
             Double newPersonalRating = PersonalGradeSlider.getValue();
             ObservableList<String> selectedCategories = lstCategory.getItems();// Get the selected categories from the ListView
+
+            System.out.println("New Movie Details: ");
+            System.out.println("Name: " + newMovieName);
+            System.out.println("Path: " + newMoviePath);
+            System.out.println("IMDB Rating: " + newImdbRating);
+            System.out.println("Personal Rating: " + newPersonalRating);
+            System.out.println("Selected Categories: " + selectedCategories);
 
             if (movieToEdit != null) {
                 movieToEdit.setName(newMovieName);
@@ -183,28 +190,37 @@ public class AddEditMovieController implements Initializable{
 
                 // Remove old categories and add new ones
                 for (String categoryName : selectedCategories) {
+                    System.out.println("Checking category: " + categoryName);
                     Category category = movieModel.getCategoryByName(categoryName);
                     if (category != null) {
+                        System.out.println("Adding movie to category: " + category.getName());
                         movieModel.addMovieToCategory(category, movieToEdit); // Add movie to new category
-
+                        System.out.println("Category not found: " + categoryName);
                     }
                 }
             } else {
                 Movie newMovie = new Movie(newMovieName, newImdbRating, newPersonalRating, newMoviePath, selectedCategories);
                 movieModel.addMovie(newMovie);
+                System.out.println("New movie added with categories.");
                 // Associate the movie with selected categories
                 for (String categoryName : selectedCategories) {
+                    System.out.println("Checking category: " + categoryName);
                     // Retrieve the Category object based on the category name
                     Category category = movieModel.getCategoryByName(categoryName);
                     if (category != null) {
+                        System.out.println("Adding new movie to category: " + category.getName());
                         // Add the created movie to the retrieved category
                         movieModel.addMovieToCategory(category, newMovie);
-                    }
-                } System.out.println("New movie added with categories.");
+                    }else {
+                        System.out.println("Category not found: " + categoryName);
+                } System.out.println("New movie added with categories.");}
 
                 }
                 movieCollectionApplicationController.loadCategoriesFromDatabase();
                 movieCollectionApplicationController.loadMoviesFromDatabase();
+            System.out.println("Categories and Movies reloaded from database.");
+                //movieCollectionApplicationController.lstMovie.getItems().clear();
+                //movieCollectionApplicationController.lstMovie.setItems(movieModel.getAllMovies());
 
 
         } catch (IOException e) {

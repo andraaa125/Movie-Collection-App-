@@ -44,6 +44,15 @@ public class MovieModel {
         return null;
     }
 
+/*
+    public Category getCategoryByName(String categoryName) {
+        return getAllCategories().stream()
+                .filter(category -> category.getName().equalsIgnoreCase(categoryName.trim()))
+                .findFirst()
+                .orElse(null);
+    }
+*/
+
     public void deleteCategory(String categoryName) throws IOException {
         categoryManager.deleteCategory(categoryName);
     }
@@ -155,9 +164,11 @@ public class MovieModel {
 
     public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
         catMovieManager.removeMovieFromCategory(category, movie);
+
     }
     public void addMovieToCategory(Category category, Movie movie) throws IOException {
         catMovieManager.addMovieToCategory(category, movie);
+
     }
 
 
