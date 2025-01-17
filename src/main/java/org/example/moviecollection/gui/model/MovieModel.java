@@ -8,8 +8,10 @@ import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.bll.CatMovieManager;
 import org.example.moviecollection.bll.CategoryManager;
 import org.example.moviecollection.bll.MovieManager;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +31,7 @@ public class MovieModel {
         try {
             List<Category> categoryList = categoryManager.getAllCategory();
             categories.setAll(categoryList);
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             System.out.println("Error loading playlists: " + e.getMessage());
         }
         return categories;
@@ -44,11 +46,11 @@ public class MovieModel {
         return null;
     }
 
-    public void deleteCategory(String categoryName) throws IOException {
+    public void deleteCategory(String categoryName) throws MovieCollectionAppExceptions {
         categoryManager.deleteCategory(categoryName);
     }
 
-    public void addCategory(Category newCategory) throws IOException {
+    public void addCategory(Category newCategory) throws MovieCollectionAppExceptions {
         //categoryManager.addCategory(newCategory);
         try {
             categoryManager.addCategory(newCategory);
@@ -56,11 +58,11 @@ public class MovieModel {
             System.out.println("Category added to MovieModel: " + newCategory.getName());
         } catch (Exception e) {
             System.err.println("Error in MovieModel.addCategory: " + e.getMessage());
-            throw new IOException("Failed to add category in MovieModel.", e);
+            throw new MovieCollectionAppExceptions("Failed to add category in MovieModel.", (SQLException) e);
         }
     }
 
-    public void updateCategory(Category category) throws IOException {
+    public void updateCategory(Category category) throws MovieCollectionAppExceptions {
         categoryManager.updateCategory(category);
     }
 
@@ -68,25 +70,25 @@ public class MovieModel {
         try {
             List<Movie> movieList = movieManager.getAllMovies();
             movies.setAll(movieList);
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             System.out.println("Error loading movies: " + e.getMessage());
         }
         return movies;
     }
 
-    public void addMovie(Movie newMovie) throws IOException {
+    public void addMovie(Movie newMovie) throws MovieCollectionAppExceptions {
         movieManager.addMovie(newMovie);
     }
 
-    public void deleteMovie(int movieId) throws IOException {
+    public void deleteMovie(int movieId) throws MovieCollectionAppExceptions {
         movieManager.deleteMovie(movieId);
     }
 
-    public void updateMovie(Movie movieToEdit) throws IOException {
+    public void updateMovie(Movie movieToEdit) throws MovieCollectionAppExceptions {
         movieManager.updateMovie(movieToEdit);
     }
 
-    public ObservableList<String> displayCategoryName() throws IOException {
+    public ObservableList<String> displayCategoryName() throws MovieCollectionAppExceptions {
         Set<String> categorySet = new HashSet<>(); // Use a Set to automatically remove duplicates
         List<Category> categories = categoryManager.getAllCategory();
         for (Category category : categories) {
@@ -104,7 +106,7 @@ public class MovieModel {
         try {
             List<Movie> searchResult = movieManager.searchMovie(query);
             searchedMovies.setAll(searchResult); // Update observable list with filtered songs
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             System.out.println("Error searching movies: " + e.getMessage());
         }
         return searchedMovies;
@@ -115,17 +117,17 @@ public class MovieModel {
         try {
             List<Movie> filterResult = movieManager.moviesToDelete(); // Call the moviesToDelete method
             shouldDeleteMovies.setAll(filterResult); // Update observable list with filtered movies
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             System.out.println("Error filtering movies to delete: " + e.getMessage());
         }
         return shouldDeleteMovies;
     }
 
-    public boolean isCategoryExists(String categoryName) throws IOException {
+    public boolean isCategoryExists(String categoryName) throws MovieCollectionAppExceptions {
         return categoryManager.isCategoryExists(categoryName); // Assuming `categoryManager` is an instance of `CategoryManager`
     }
 
-    public void updateLastView(int movieId) throws IOException {
+    public void updateLastView(int movieId) throws MovieCollectionAppExceptions {
         movieManager.updateLastView(movieId);
     }
 
@@ -134,7 +136,7 @@ public class MovieModel {
         try {
             List<CatMovie> allMoviesInCategory = catMovieManager.getMoviesInCategory(categoryId);
             moviesInCategory.setAll(allMoviesInCategory);
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             System.out.println("Error loading movies in category: " + e.getMessage());
         }
         return moviesInCategory;
@@ -145,7 +147,7 @@ public class MovieModel {
         try {
             List<CatMovie> allCategoriesPerMovie = catMovieManager.getCategoriesPerMovie(movieId);
             categoriesPerMovie.setAll(allCategoriesPerMovie); // Populate the ObservableList with categories
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             System.out.println("Error loading categories for movie: " + e.getMessage());
             e.printStackTrace();
         }
@@ -153,10 +155,10 @@ public class MovieModel {
     }
 
 
-    public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
+    public void removeMovieFromCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         catMovieManager.removeMovieFromCategory(category, movie);
     }
-    public void addMovieToCategory(Category category, Movie movie) throws IOException {
+    public void addMovieToCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         catMovieManager.addMovieToCategory(category, movie);
     }
 

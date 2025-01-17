@@ -20,6 +20,7 @@ import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.bll.FilterService;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 import org.example.moviecollection.gui.model.MovieModel;
 
 import java.awt.*;
@@ -63,7 +64,7 @@ public class MovieCollectionApplicationController implements Initializable {
         btnReset.setDisable(true);
         try {
             handleCategorySelection();
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             throw new RuntimeException(e);
         }
         Platform.runLater(this::checkMoviesToDelete);
@@ -75,7 +76,7 @@ public class MovieCollectionApplicationController implements Initializable {
 
     }
 
-    public void handleCategorySelection() throws IOException {
+    public void handleCategorySelection() throws MovieCollectionAppExceptions {
         listViewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Get the selected category
             Category selectedCategory = (Category) listViewCategories.getSelectionModel().getSelectedItem();
@@ -148,9 +149,11 @@ public class MovieCollectionApplicationController implements Initializable {
                         movieModel.updateLastView(selectedMovie.getId());
                         loadMoviesFromDatabase(); // Refresh the table to show updated data
 
-                    } catch (IOException e) {
+                    } catch (MovieCollectionAppExceptions e) {
                         showAlert("Error opening movie", "Unable to play the movie file.");
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 } else {
                     showAlert("File not found", "The movie file does not exist at the specified path.");
@@ -178,7 +181,7 @@ public class MovieCollectionApplicationController implements Initializable {
         LastViewColumn.setCellValueFactory(new PropertyValueFactory<>("lastView"));
     }
 
-    public void onAddCategoryClick(ActionEvent actionEvent) throws IOException {
+    public void onAddCategoryClick(ActionEvent actionEvent) throws MovieCollectionAppExceptions, IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("CategoryEditor.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         AddEditCategoryController categoryController = fxmlLoader.getController();
@@ -189,7 +192,7 @@ public class MovieCollectionApplicationController implements Initializable {
         stage.show();
     }
 
-    public void onEditCategoryClick(ActionEvent actionEvent) throws IOException {
+    public void onEditCategoryClick(ActionEvent actionEvent) throws MovieCollectionAppExceptions, IOException {
         Category selectedCategory = (Category) listViewCategories.getSelectionModel().getSelectedItem();
         if (selectedCategory == null) {
             showAlert("No Category Selected","Please select a category to edit");
@@ -247,7 +250,7 @@ public class MovieCollectionApplicationController implements Initializable {
         alert.showAndWait();
     }
 
-    public void onAddMovieClick(ActionEvent actionEvent) throws IOException {
+    public void onAddMovieClick(ActionEvent actionEvent) throws MovieCollectionAppExceptions, IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MovieCollectionApplication.class.getResource("MovieEditor.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         AddEditMovieController movieController = fxmlLoader.getController();
@@ -258,7 +261,7 @@ public class MovieCollectionApplicationController implements Initializable {
         stage.show();
     }
 
-    public void onEditMovieClick(ActionEvent actionEvent) throws IOException {
+    public void onEditMovieClick(ActionEvent actionEvent) throws MovieCollectionAppExceptions, IOException {
         Movie selectedMovie = (Movie) lstMovie.getSelectionModel().getSelectedItem();
         if (selectedMovie == null) {
             showAlert("No Movie Selected","Please select a movie to edit");

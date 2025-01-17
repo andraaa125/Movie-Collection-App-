@@ -5,6 +5,7 @@ import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.ICatMovieDAO;
 import org.example.moviecollection.dal.db.CatMovieDAODB;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,21 +14,21 @@ public class CatMovieManager {
     private final ICatMovieDAO catMovieDAO = new CatMovieDAODB();
 
     // Get all movies in a specific category
-    public List<CatMovie> getMoviesInCategory(int categoryId) throws IOException {
+    public List<CatMovie> getMoviesInCategory(int categoryId) throws MovieCollectionAppExceptions {
         return catMovieDAO.getMoviesInCategory(categoryId);
     }
 
-    public List<CatMovie> getCategoriesPerMovie(int movieId) throws IOException {
+    public List<CatMovie> getCategoriesPerMovie(int movieId) throws MovieCollectionAppExceptions {
         return catMovieDAO.getCategoriesPerMovie(movieId);
     }
 
     // Add a movie to a category
-    public void addMovieToCategory(Category category, Movie movie) throws IOException {
+    public void addMovieToCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         catMovieDAO.addMovieToCategory(category, movie);
     }
 
     // Remove a movie from a category
-    public void removeMovieFromCategory(Category category, Movie movie) throws IOException {
+    public void removeMovieFromCategory(Category category, Movie movie) throws MovieCollectionAppExceptions {
         catMovieDAO.removeMovieFromCategory(category, movie);
     }
 

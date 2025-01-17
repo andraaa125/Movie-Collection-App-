@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.example.moviecollection.be.CatMovie;
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.be.Movie;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 import org.example.moviecollection.gui.model.MovieModel;
 
 import java.io.File;
@@ -67,7 +68,7 @@ public class AddEditMovieController implements Initializable{
             if (!categories.isEmpty()) {
                 comboBox.setValue(categories.get(0)); // Set first category as default
             }
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             System.out.println("Error loading categories: " + e.getMessage());
             e.printStackTrace();
         }
@@ -111,7 +112,7 @@ public class AddEditMovieController implements Initializable{
         }
     }
 
-    public void setMovieToEdit(Movie movieToEdit) throws IOException {
+    public void setMovieToEdit(Movie movieToEdit) throws MovieCollectionAppExceptions {
         this.movieToEdit = movieToEdit;
         txtName.setText(movieToEdit.getName());
         txtFilePath.setText(movieToEdit.getFilePath());
@@ -207,7 +208,7 @@ public class AddEditMovieController implements Initializable{
                 movieCollectionApplicationController.loadMoviesFromDatabase();
 
 
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             movieCollectionApplicationController.showAlert("Error", "An error occurred.");
             throw new RuntimeException(e);
         }finally {

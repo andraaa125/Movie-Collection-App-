@@ -2,6 +2,7 @@ package org.example.moviecollection.dal.db;
 
 import org.example.moviecollection.be.Category;
 import org.example.moviecollection.dal.ICategoryDAO;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
 import java.io.IOException;
 import java.sql.*;
@@ -12,7 +13,7 @@ public class CategoryDAODB implements ICategoryDAO {
     private DBConnection con = new DBConnection();
 
     @Override
-    public List<Category> getAllCategory() throws IOException{
+    public List<Category> getAllCategory() throws MovieCollectionAppExceptions {
         List<Category> categories = new ArrayList<>();
         try {
             Connection c = con.getConnection();
@@ -27,7 +28,7 @@ public class CategoryDAODB implements ICategoryDAO {
             }
         } catch (SQLException e) {
             //System.err.println("SQL Error: " + e.getMessage());
-            throw new IOException("Couldn't get all categories from SQL database",e);
+            throw new MovieCollectionAppExceptions("Couldn't get all categories from SQL database",e);
         }
         return categories;
     }
@@ -80,7 +81,7 @@ public class CategoryDAODB implements ICategoryDAO {
     }
 
     @Override
-    public boolean isCategoryExists(String categoryName) throws IOException {
+    public boolean isCategoryExists(String categoryName) throws MovieCollectionAppExceptions {
         try (Connection connection = con.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM Category WHERE name = ?")) {
             ps.setString(1, categoryName);
@@ -89,7 +90,7 @@ public class CategoryDAODB implements ICategoryDAO {
                 return rs.getInt(1) > 0; // If count > 0, the category exists
             }
         } catch (SQLException e) {
-            throw new IOException("Error checking if category exists: " + e.getMessage(), e);
+            throw new MovieCollectionAppExceptions("Error checking if category exists: " + e.getMessage(), e);
         }
         return false;
     }

@@ -2,6 +2,7 @@ package org.example.moviecollection.dal.db;
 
 import org.example.moviecollection.be.Movie;
 import org.example.moviecollection.dal.IMovieDAO;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class MovieDAODB implements IMovieDAO {
     private DBConnection con = new DBConnection();
 
     @Override
-    public List<Movie> getAllMovies() throws IOException {
+    public List<Movie> getAllMovies() throws MovieCollectionAppExceptions {
         List<Movie> allMovies = new ArrayList<>();
         try {
             Connection c = con.getConnection();
@@ -37,13 +38,13 @@ public class MovieDAODB implements IMovieDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new IOException("Error fetching movies from database: " + e.getMessage(), e);
+            throw new MovieCollectionAppExceptions("Error fetching movies from database: " + e.getMessage(), e);
         }
         return allMovies;
     }
 
     @Override
-    public void addMovie(Movie movie) throws IOException{
+    public void addMovie(Movie movie) throws MovieCollectionAppExceptions{
         String sql = "INSERT INTO Movie (name, imdb_Rating, personal_rating, file_path, last_viewed) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = con.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -58,12 +59,12 @@ public class MovieDAODB implements IMovieDAO {
             }
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new IOException("Error adding movie to database: " + e.getMessage(), e);
+            throw new MovieCollectionAppExceptions("Error adding movie to database: " + e.getMessage(), e);
         }
     }
 
     @Override
-    public void deleteMovie(int movieId) throws IOException{
+    public void deleteMovie(int movieId) throws MovieCollectionAppExceptions{
         String deleteMovie = "DELETE FROM Movie WHERE id = ?";
 
         try (Connection connection = con.getConnection();
@@ -78,7 +79,7 @@ public class MovieDAODB implements IMovieDAO {
 
 
     @Override
-    public void updateMovie(Movie movie) throws IOException {
+    public void updateMovie(Movie movie) throws MovieCollectionAppExceptions {
         String sql = "UPDATE Movie SET name = ?, imdb_rating = ?, personal_rating = ?, file_path = ?, last_viewed = ? WHERE id = ?";
         try (Connection connection = con.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -94,10 +95,10 @@ public class MovieDAODB implements IMovieDAO {
             ps.setInt(6, movie.getId());
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated == 0) {
-                throw new IOException("No movie found with the given ID to update.");
+                throw new MovieCollectionAppExceptions("No movie found with the given ID to update.");
             }
         } catch (SQLException e) {
-            throw new IOException("Error updating movie in the database: " + e.getMessage(), e);
+            throw new MovieCollectionAppExceptions("Error updating movie in the database: " + e.getMessage(), e);
         }
     }
 
@@ -112,15 +113,15 @@ public class MovieDAODB implements IMovieDAO {
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated == 0) {
-                throw new IOException("No movie found with the given ID to update the last view.");
+                throw new MovieCollectionAppExceptions("No movie found with the given ID to update the last view.");
             }
         } catch (SQLException e) {
             try {
-                throw new IOException("Error updating the last view in the database: " + e.getMessage(), e);
-            } catch (IOException ex) {
+                throw new MovieCollectionAppExceptions("Error updating the last view in the database: " + e.getMessage(), e);
+            } catch (MovieCollectionAppExceptions ex) {
                 throw new RuntimeException(ex);
             }
-        } catch (IOException e) {
+        } catch (MovieCollectionAppExceptions e) {
             throw new RuntimeException(e);
         }
     }

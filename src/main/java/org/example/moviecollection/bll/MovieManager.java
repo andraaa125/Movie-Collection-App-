@@ -5,6 +5,7 @@ import org.example.moviecollection.bll.util.MovieSearcher;
 import org.example.moviecollection.bll.util.MoviesToDelete;
 import org.example.moviecollection.dal.IMovieDAO;
 import org.example.moviecollection.dal.db.MovieDAODB;
+import org.example.moviecollection.exceptions.MovieCollectionAppExceptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,34 +16,34 @@ public class MovieManager {
     private final MovieSearcher movieSearcher = new MovieSearcher();
     private final MoviesToDelete moviesToDelete = new MoviesToDelete();
 
-    public List<Movie> getAllMovies() throws IOException{
+    public List<Movie> getAllMovies() throws MovieCollectionAppExceptions {
         return movieDAO.getAllMovies();
     }
 
-    public List<Movie> searchMovie(String query) throws IOException{
+    public List<Movie> searchMovie(String query) throws MovieCollectionAppExceptions{
         List<Movie> allMovies = getAllMovies();
         List<Movie> searchResult = movieSearcher.search(allMovies, query);
         return searchResult;
     }
 
-    public List<Movie> moviesToDelete() throws IOException{
+    public List<Movie> moviesToDelete() throws MovieCollectionAppExceptions{
         List<Movie> allMovies = getAllMovies();
         return moviesToDelete.filterMoviesToDelete(allMovies);
     }
 
-    public void addMovie(Movie movie) throws IOException{
+    public void addMovie(Movie movie) throws MovieCollectionAppExceptions{
         movieDAO.addMovie(movie);
     }
 
-    public void deleteMovie(int movieId) throws IOException{
+    public void deleteMovie(int movieId) throws MovieCollectionAppExceptions{
         movieDAO.deleteMovie(movieId);
     }
 
-    public void updateMovie(Movie movie) throws IOException{
+    public void updateMovie(Movie movie) throws MovieCollectionAppExceptions{
         movieDAO.updateMovie(movie);
     }
 
-    public void updateLastView(int movieId) throws IOException{
+    public void updateLastView(int movieId) throws MovieCollectionAppExceptions{
         movieDAO.updateLastView(movieId);
     }
 
